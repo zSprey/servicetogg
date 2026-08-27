@@ -1,41 +1,159 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ServiceTogg - EV Bakım ve Aksesuar</title>
+    <title>ServiceTogg | Bakım, Servis & Aksesuar Rehberi</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { toggred: '#e53935', toggdark: '#121212', toggcard: '#1e1e1e' } } }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-900 font-sans">
-    <header class="bg-red-600 text-white p-6 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">ServiceTogg</h1>
-            <nav>
-                <a href="#" class="px-3 hover:underline">Aksesuarlar</a>
-                <a href="#" class="px-3 hover:underline">Bakım Noktaları</a>
-                <a href="#" class="px-3 hover:underline">İletişim</a>
-            </nav>
-        </div>
-    </header>
-    <main class="container mx-auto p-6 mt-8 text-center min-h-[60vh]">
-        <h2 class="text-4xl font-extrabold mb-4">Elektrikli Aracınız İçin En İyi Ekipmanlar</h2>
-        <p class="text-lg text-gray-700 mb-8">Paspas, ekran koruyucu, PPF kaplama, boya koruma ve daha fazlası için bağımsız aksesuar mağazası ve hizmet rehberi.</p>
-        <div class="grid md:grid-cols-2 gap-6 text-left mt-12">
-            <div class="bg-white p-6 rounded-lg shadow border-t-4 border-red-500">
-                <h3 class="font-bold text-xl mb-2">Premium Aksesuarlar</h3>
-                <p>Aracınıza tam uyumlu kauçuk paspaslar, şarj dönüştürücü adaptörler ve kaliteli aksesuarlar çok yakında.</p>
+<body class="bg-toggdark text-gray-200 font-sans antialiased">
+    <!-- Navbar -->
+    <nav class="bg-black/90 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+            <div class="flex-shrink-0 flex items-center">
+                <span class="text-white text-2xl font-bold tracking-tight"><i class="fa-solid fa-wrench text-toggred mr-2"></i>Service<span class="text-toggred">Togg</span></span>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow border-t-4 border-red-500">
-                <h3 class="font-bold text-xl mb-2">Bağımsız Servis Ağı</h3>
-                <p>Elektrikli araç yıkama, seramik kaplama ve cam filmi hizmeti sunan seçkin noktalar rehberi.</p>
+            <div class="hidden md:flex space-x-8">
+                <a href="#bakim" class="text-gray-300 hover:text-white transition">Bakım Takvimi</a>
+                <a href="#aksesuar" class="text-gray-300 hover:text-white transition">Aksesuarlar</a>
+                <a href="#servis" class="text-gray-300 hover:text-white transition">Servis Haritası</a>
             </div>
         </div>
-    </main>
-    <footer class="bg-gray-800 text-gray-400 text-sm p-6 mt-12">
-        <div class="container mx-auto text-center">
+    </nav>
+
+    <!-- Hero -->
+    <div class="relative bg-toggdark overflow-hidden py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
+                Aracınız İçin <span class="text-toggred">Premium</span> Ekosistem
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400">
+                Togg T10X periyodik bakım maliyetleri, onaylı yedek parçalar ve yüksek kaliteli aksesuarlar için Türkiye'nin ilk referans platformu.
+            </p>
+        </div>
+    </div>
+
+    <!-- İnteraktif Bakım Takvimi -->
+    <div id="bakim" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="text-3xl font-bold text-white mb-8 border-l-4 border-toggred pl-4">Periyodik Bakım Hesaplayıcı</h2>
+        <div class="bg-toggcard rounded-xl p-6 shadow-2xl border border-gray-800 flex flex-col md:flex-row gap-8">
+            <div class="w-full md:w-1/3">
+                <label class="block text-sm font-medium text-gray-400 mb-2">Güncel Kilometreniz</label>
+                <select id="kmSelect" class="bg-black text-white w-full rounded-md border border-gray-700 p-3 outline-none focus:border-toggred transition">
+                    <option value="40000">40.000 KM (2. Yıl)</option>
+                    <option value="80000">80.000 KM (4. Yıl)</option>
+                    <option value="120000">120.000 KM (6. Yıl)</option>
+                </select>
+                <button onclick="calcMaintenance()" class="mt-6 w-full bg-toggred hover:bg-red-700 text-white font-bold py-3 px-4 rounded-md transition shadow-lg shadow-red-500/30">
+                    <i class="fa-solid fa-calculator mr-2"></i> Hesapla
+                </button>
+            </div>
+            <div class="w-full md:w-2/3 bg-black rounded-lg p-6 border border-gray-800">
+                <h3 class="text-xl font-bold text-white mb-4">Değişecek Parçalar & Kontroller</h3>
+                <ul id="partsList" class="space-y-3 text-gray-300">
+                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> HEPA / Polen Filtresi Değişimi</li>
+                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Fren Hidrolik Sıvısı Testi & Değişimi</li>
+                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Batarya Soğutma Sıvısı Kontrolü</li>
+                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Yürüyen Aksam Tork Kontrolü</li>
+                </ul>
+                <div class="mt-6 pt-4 border-t border-gray-700">
+                    <p class="text-gray-400 text-sm">Tahmini Ortalama Maliyet (Parça + İşçilik)</p>
+                    <p id="costTotal" class="text-3xl font-bold text-white mt-1">₺4.850 - ₺5.500</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aksesuar Vitrini -->
+    <div id="aksesuar" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="text-3xl font-bold text-white mb-8 border-l-4 border-toggred pl-4">Premium Aksesuarlar</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Product 1 -->
+            <div class="bg-toggcard rounded-xl overflow-hidden border border-gray-800 hover:border-toggred transition group">
+                <div class="h-48 bg-gray-800 flex items-center justify-center">
+                    <i class="fa-solid fa-car-side text-5xl text-gray-600 group-hover:text-toggred transition"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold text-white">3D Lazer Kesim TPE Paspas</h3>
+                    <p class="text-gray-400 text-sm mt-2">T10X tabanına birebir uyumlu, koku yapmayan havuzlu tasarım.</p>
+                    <div class="mt-4 flex justify-between items-center">
+                        <span class="text-xl font-bold text-white">₺2.499</span>
+                        <button class="bg-gray-800 hover:bg-toggred text-white px-4 py-2 rounded text-sm transition">İncele</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Product 2 -->
+            <div class="bg-toggcard rounded-xl overflow-hidden border border-gray-800 hover:border-toggred transition group">
+                <div class="h-48 bg-gray-800 flex items-center justify-center">
+                    <i class="fa-solid fa-mobile-screen text-5xl text-gray-600 group-hover:text-toggred transition"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold text-white">29" Mat Nano Ekran Koruyucu</h3>
+                    <p class="text-gray-400 text-sm mt-2">Parmak izi bırakmayan, parlamayı önleyen uçtan uca koruma.</p>
+                    <div class="mt-4 flex justify-between items-center">
+                        <span class="text-xl font-bold text-white">₺850</span>
+                        <button class="bg-gray-800 hover:bg-toggred text-white px-4 py-2 rounded text-sm transition">İncele</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Product 3 -->
+            <div class="bg-toggcard rounded-xl overflow-hidden border border-gray-800 hover:border-toggred transition group">
+                <div class="h-48 bg-gray-800 flex items-center justify-center">
+                    <i class="fa-solid fa-plug-circle-bolt text-5xl text-gray-600 group-hover:text-toggred transition"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold text-white">22 kW Type-2 Şarj Kablosu</h3>
+                    <p class="text-gray-400 text-sm mt-2">Halka açık AC istasyonlar için 5 metre, trifaze onaylı kablo.</p>
+                    <div class="mt-4 flex justify-between items-center">
+                        <span class="text-xl font-bold text-white">₺4.200</span>
+                        <button class="bg-gray-800 hover:bg-toggred text-white px-4 py-2 rounded text-sm transition">İncele</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-gray-800 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center text-gray-500">
             <p>&copy; 2026 ServiceTogg. Tüm hakları saklıdır.</p>
-            <p class="mt-2 text-xs">Yasal Uyarı: Bu e-ticaret/rehber platformu bağımsızdır. Togg markası veya yetkili servis ağı ile resmi bağı bulunmamaktadır.</p>
+            <p class="text-xs mt-4 max-w-3xl mx-auto">Yasal Uyarı: Bu web sitesi bağımsız bir rehber ve aksesuar yönlendirme platformudur. Togg markası veya T-Care yetkili servis ağı ile hiçbir resmi bağı bulunmamaktadır. "Togg", ilgili hak sahiplerinin tescilli markasıdır.</p>
         </div>
     </footer>
+
+    <script>
+        function calcMaintenance() {
+            const km = document.getElementById('kmSelect').value;
+            const partsList = document.getElementById('partsList');
+            const costTotal = document.getElementById('costTotal');
+            
+            if(km === '40000') {
+                partsList.innerHTML = 
+                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> HEPA / Polen Filtresi Değişimi</li>
+                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Fren Hidrolik Sıvısı Testi & Değişimi</li>
+                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Yürüyen Aksam Tork Kontrolü</li>;
+                costTotal.innerText = '₺4.850 - ₺5.500';
+            } else if (km === '80000') {
+                partsList.innerHTML = 
+                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> HEPA / Polen Filtresi Değişimi</li>
+                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Fren Hidrolik Sıvısı Testi & Değişimi</li>
+                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Batarya Soğutma Sıvısı Değişimi</li>
+                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Redüktör Yağı Değişimi</li>;
+                costTotal.innerText = '₺7.200 - ₺8.500';
+            } else {
+                partsList.innerHTML = 
+                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Standart Ağır Bakım Kontrolleri</li>
+                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Batarya SoH (State of Health) Raporlaması</li>;
+                costTotal.innerText = 'Servise Danışın';
+            }
+        }
+    </script>
 </body>
 </html>
