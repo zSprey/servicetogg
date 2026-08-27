@@ -3,134 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ServiceTogg | Premium EV Aksesuarları ve Bakım Merkezi</title>
+    <title>ServiceTogg | Premium EV Aksesuarları</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { brand: '#e53935', bgdark: '#0a0a0a', card: '#171717' } } } }</script>
+    <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { brand: '#e53935', bgdark: '#0a0a0a', card: '#171717', bglight: '#f8fafc', cardlight: '#ffffff' } } } }</script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Structured Data -->
-    <script type="application/ld+json">{'@context":"https://schema.org",'@type":"WebSite","name":"ServiceTogg","url":"https://servicetogg.com/"}</script>
 </head>
-<body class="bg-bgdark text-gray-200 font-sans antialiased selection:bg-brand selection:text-white">
-    <nav class="bg-black/90 backdrop-blur-lg border-b border-gray-800 sticky top-0 z-50">
+<body class="bg-bglight dark:bg-bgdark text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <!-- Navbar -->
+    <nav class="bg-white/90 dark:bg-black/90 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 transition-colors">
         <div class="max-w-7xl mx-auto px-4 flex justify-between h-16 items-center">
-            <span class="text-white text-2xl font-black tracking-tighter"><i class="fa-solid fa-layer-group text-brand mr-2"></i>Service<span class="text-brand">Togg</span></span>
+            <span class="text-black dark:text-white text-2xl font-black tracking-tighter"><i class="fa-solid fa-layer-group text-brand mr-2"></i>Service<span class="text-brand">Togg</span></span>
             <div class="hidden md:flex space-x-6 text-sm font-medium">
-                <a href="#magaza" class="hover:text-brand transition">Aksesuar Mağazası</a>
-                <a href="#randevu" class="hover:text-brand transition">Servis Randevusu</a>
+                <button onclick="toggleAdmin()" class="text-brand hover:text-red-700 font-bold"><i class="fa-solid fa-lock mr-1"></i> Admin</button>
+                <a href="#magaza" class="hover:text-brand">Magaza</a>
+                <a href="#iletisim" class="hover:text-brand">Iletisim</a>
             </div>
             <div class="flex items-center gap-4">
-                <button class="relative text-gray-400 hover:text-white transition">
-                    <i class="fa-solid fa-cart-shopping text-xl"></i>
-                    <span id="cartCount" class="absolute -top-2 -right-2 bg-brand text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
+                <button onclick="toggleTheme()" class="text-gray-500 dark:text-gray-400 hover:text-brand"><i id="themeIcon" class="fa-solid fa-sun text-xl"></i></button>
+                <button class="relative text-gray-500 dark:text-gray-400 hover:text-brand">
+                    <i class="fa-solid fa-cart-shopping text-xl"></i><span id="cartCount" class="absolute -top-2 -right-2 bg-brand text-white text-[10px] font-bold px-1.5 rounded-full">0</span>
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <header class="relative h-[60vh] flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1617531653332-bd46c24f2068?q=80&w=2000')] bg-cover bg-center opacity-30"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-bgdark via-transparent to-transparent"></div>
-        <div class="relative z-10 text-center px-4 max-w-4xl">
-            <span class="bg-brand/20 text-brand border border-brand/30 px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4 inline-block">Sınıfının En İyisi</span>
-            <h1 class="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">Aracınızı <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400">Geleceğe</span> Hazırlayın</h1>
-            <p class="text-lg md:text-xl text-gray-400 mb-8">Togg T10X ile %100 uyumlu premium aksesuarlar, aerodinamik eklentiler ve yetkili bakım çözümleri.</p>
-            <a href="#magaza" class="bg-brand hover:bg-red-700 text-white font-bold py-4 px-8 rounded-full transition transform hover:scale-105 shadow-[0_0_20px_rgba(229,57,53,0.4)]">Alışverişe Başla</a>
+    <!-- Admin Modal (Hidden) -->
+    <div id="adminModal" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center backdrop-blur-sm">
+        <div class="bg-white dark:bg-card p-8 rounded-2xl max-w-4xl w-full mx-4 shadow-2xl border border-gray-200 dark:border-gray-800">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-black dark:text-white"><i class="fa-solid fa-chart-line text-brand mr-2"></i>Satis & Siparis Paneli</h2>
+                <button onclick="toggleAdmin()" class="text-gray-500 hover:text-red-500"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            </div>
+            <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="bg-gray-100 dark:bg-bgdark p-4 rounded-xl border border-gray-200 dark:border-gray-700"><p class="text-gray-500 text-sm">Gunluk Ciro</p><p class="text-2xl font-bold dark:text-white">₺42.500</p></div>
+                <div class="bg-gray-100 dark:bg-bgdark p-4 rounded-xl border border-gray-200 dark:border-gray-700"><p class="text-gray-500 text-sm">Bekleyen Siparis</p><p class="text-2xl font-bold text-brand">14</p></div>
+                <div class="bg-gray-100 dark:bg-bgdark p-4 rounded-xl border border-gray-200 dark:border-gray-700"><p class="text-gray-500 text-sm">Aktif Randevu</p><p class="text-2xl font-bold dark:text-white">8</p></div>
+            </div>
+            <div class="bg-gray-100 dark:bg-bgdark rounded-xl p-4 border border-gray-200 dark:border-gray-700 overflow-auto max-h-64">
+                <table class="w-full text-left text-sm dark:text-gray-300">
+                    <thead><tr class="border-b border-gray-300 dark:border-gray-700"><th class="pb-2">Siparis No</th><th class="pb-2">Urun</th><th class="pb-2">Durum</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b border-gray-200 dark:border-gray-800"><td class="py-2">#ORD-902</td><td>3D Paspas (T10X)</td><td><span class="text-yellow-500">Hazirlaniyor</span></td></tr>
+                        <tr class="border-b border-gray-200 dark:border-gray-800"><td class="py-2">#ORD-901</td><td>Kaucuk Bagaj Havuzu</td><td><span class="text-green-500">Kargolandi</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </header>
+    </div>
 
-    <!-- Mağaza Modülü -->
-    <section id="magaza" class="max-w-7xl mx-auto px-4 py-20">
-        <h2 class="text-3xl font-black text-white mb-10 border-l-4 border-brand pl-4">Premium Ekipmanlar</h2>
-        <div id="productGrid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- JS ile doldurulacak -->
-        </div>
+    <section id="magaza" class="max-w-7xl mx-auto px-4 py-12">
+        <h2 class="text-3xl font-black dark:text-white mb-8 border-l-4 border-brand pl-4">Aksesuar Vitrini</h2>
+        <div id="productGrid" class="grid grid-cols-1 md:grid-cols-4 gap-6"></div>
     </section>
 
-    <!-- Randevu Modülü -->
-    <section id="randevu" class="bg-card border-y border-gray-800 py-20">
-        <div class="max-w-4xl mx-auto px-4">
-            <h2 class="text-3xl font-black text-white mb-8 text-center">Yetkili Servis Randevusu</h2>
-            <form onsubmit="handleForm(event)" class="bg-bgdark p-8 rounded-2xl border border-gray-800 shadow-2xl space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm text-gray-400 mb-2">Şehir</label>
-                        <select class="w-full bg-card border border-gray-700 rounded-lg p-3 text-white focus:border-brand outline-none">
-                            <option>İstanbul (Maslak T-Care)</option>
-                            <option>Ankara (Söğütözü T-Care)</option>
-                            <option>İzmir (Bornova Yetkili Servis)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm text-gray-400 mb-2">Talep Türü</label>
-                        <select class="w-full bg-card border border-gray-700 rounded-lg p-3 text-white focus:border-brand outline-none">
-                            <option>40.000 KM Periyodik Bakım</option>
-                            <option>Yazılım (TruOS) Güncellemesi</option>
-                            <option>Hasar / Kaporta Onarımı</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm text-gray-400 mb-2">Plaka veya Şasi No</label>
-                    <input type="text" placeholder="34 TGG 001" class="w-full bg-card border border-gray-700 rounded-lg p-3 text-white focus:border-brand outline-none" required>
-                </div>
-                <button type="submit" class="w-full bg-brand hover:bg-red-700 text-white font-bold py-4 rounded-lg transition">Randevu Oluştur</button>
+    <!-- Iletisim -->
+    <section id="iletisim" class="bg-white dark:bg-card border-y border-gray-200 dark:border-gray-800 py-16 transition-colors">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-black dark:text-white mb-6">Sponsorluk & B2B Iletisim</h2>
+            <form onsubmit="event.preventDefault(); alert('Mesajiniz Auto-Mail sistemine iletildi!');" class="space-y-4">
+                <input type="text" placeholder="Firma / Ad Soyad" class="w-full bg-gray-50 dark:bg-bgdark border border-gray-300 dark:border-gray-700 rounded-lg p-3 dark:text-white focus:border-brand outline-none" required>
+                <textarea placeholder="Mesajiniz..." rows="4" class="w-full bg-gray-50 dark:bg-bgdark border border-gray-300 dark:border-gray-700 rounded-lg p-3 dark:text-white focus:border-brand outline-none" required></textarea>
+                <button type="submit" class="w-full bg-brand text-white font-bold py-3 rounded-lg hover:bg-red-700 transition">Mesaj Gonder</button>
             </form>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-black py-12 border-t border-gray-900">
-        <div class="max-w-7xl mx-auto px-4 text-center text-gray-500 text-sm">
-            <p class="mb-2">&copy; 2026 ServiceTogg. Tüm KVKK ve Gizlilik politikaları saklıdır.</p>
-            <p>Bağımsız e-ticaret platformudur. Togg markası ile resmi bağı yoktur.</p>
-        </div>
-    </footer>
-
     <script>
-        // E-Ticaret Dummy Data
         const products = [
-            { id: 1, name: "3D Lazer Kesim TPE Paspas (T10X)", price: 2499, img: "fa-car-side", tag: "En Çok Satan" },
-            { id: 2, name: "Uçtan Uca Nano Ekran Koruyucu", price: 850, img: "fa-mobile-screen", tag: "Yeni" },
-            { id: 3, name: "Type-2 Trifaze Şarj Kablosu 22kW", price: 4200, img: "fa-plug-circle-bolt", tag: "Zorunlu İhtiyaç" },
-            { id: 4, name: "Bagaj Havuzu (Kaydırmaz)", price: 1200, img: "fa-box-open", tag: "" },
-            { id: 5, name: "PPF Şeffaf Kaput Koruma", price: 6500, img: "fa-shield-halved", tag: "Premium" },
-            { id: 6, name: "Frunk (Ön Bagaj) Kiti", price: 3800, img: "fa-toolbox", tag: "Modifiye" }
+            { name: "3D Lazer TPE Paspas", price: 2499, img: "fa-car-side" },
+            { name: "Nano Ekran Koruyucu", price: 850, img: "fa-mobile-screen" },
+            { name: "Type-2 Kablo 22kW", price: 4200, img: "fa-plug-circle-bolt" },
+            { name: "PPF Kaput Koruma", price: 6500, img: "fa-shield-halved" }
         ];
-
         let cart = 0;
-        
-        function renderProducts() {
-            const grid = document.getElementById('productGrid');
-            grid.innerHTML = products.map(p => `
-                <div class="bg-card rounded-2xl overflow-hidden border border-gray-800 hover:border-brand transition duration-300 group">
-                    <div class="h-48 bg-gray-900 flex items-center justify-center relative">
-                        ${p.tag ? `<span class="absolute top-3 left-3 bg-brand text-white text-[10px] font-bold px-2 py-1 rounded">${p.tag}</span>` : ''}
-                        <i class="fa-solid ${p.img} text-6xl text-gray-700 group-hover:text-brand transition duration-500 group-hover:scale-110"></i>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-white font-bold text-lg mb-1 truncate" title="${p.name}">${p.name}</h3>
-                        <p class="text-brand font-black text-xl mb-4">₺${p.price.toLocaleString('tr-TR')}</p>
-                        <button onclick="addToCart()" class="w-full bg-gray-800 hover:bg-brand text-white font-bold py-2.5 rounded-lg transition">Sepete Ekle</button>
-                    </div>
+
+        document.getElementById('productGrid').innerHTML = products.map(p => `
+            <div class="bg-white dark:bg-card rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 hover:border-brand transition group shadow-sm">
+                <div class="h-40 bg-gray-100 dark:bg-gray-900 flex items-center justify-center"><i class="fa-solid ${p.img} text-5xl text-gray-400 dark:text-gray-700 group-hover:text-brand transition duration-500 group-hover:scale-110"></i></div>
+                <div class="p-5">
+                    <h3 class="dark:text-white font-bold text-md mb-1">${p.name}</h3>
+                    <p class="text-brand font-black text-lg mb-3">₺${p.price.toLocaleString('tr-TR')}</p>
+                    <button onclick="cart++; document.getElementById('cartCount').innerText = cart;" class="w-full bg-gray-100 hover:bg-brand dark:bg-gray-800 dark:hover:bg-brand hover:text-white text-gray-800 dark:text-white font-bold py-2 rounded-lg transition">Sepete Ekle</button>
                 </div>
-            `).join('');
-        }
+            </div>
+        `).join('');
 
-        function addToCart() {
-            cart++;
-            const count = document.getElementById('cartCount');
-            count.innerText = cart;
-            count.classList.add('animate-ping');
-            setTimeout(() => count.classList.remove('animate-ping'), 300);
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            document.getElementById('themeIcon').className = document.documentElement.classList.contains('dark') ? 'fa-solid fa-sun text-xl' : 'fa-solid fa-moon text-xl';
         }
-
-        function handleForm(e) {
-            e.preventDefault();
-            alert("API Bağlantısı (Stripe/Iyzico) Demo Modundadır. Randevu talebiniz sisteme iletildi.");
+        function toggleAdmin() {
+            document.getElementById('adminModal').classList.toggle('hidden');
         }
-
-        window.onload = renderProducts;
     </script>
 </body>
 </html>
