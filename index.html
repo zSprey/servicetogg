@@ -1,128 +1,136 @@
 <!DOCTYPE html>
-<html lang="tr" class="dark">
+<html lang="tr" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ServiceTogg | Bakım Hesaplayıcı & Togg Aksesuarları</title>
-    <meta name="description" content="Togg T10X periyodik bakım takvimi, yetkili servis noktaları, garantili aksesuarlar ve bakım maliyetlerini anında hesaplayın.">
+    <title>ServiceTogg | Premium EV Aksesuarları ve Bakım Merkezi</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { toggred: '#e53935', toggdark: '#121212', toggcard: '#1e1e1e' } } } }</script>
+    <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { brand: '#e53935', bgdark: '#0a0a0a', card: '#171717' } } } }</script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Structured Data -->
+    <script type="application/ld+json">{'@context":"https://schema.org",'@type":"WebSite","name":"ServiceTogg","url":"https://servicetogg.com/"}</script>
 </head>
-<body class="bg-toggdark text-gray-200 font-sans antialiased">
-    <nav class="bg-black/90 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
-            <div class="flex-shrink-0 flex items-center">
-                <span class="text-white text-2xl font-bold tracking-tight"><i class="fa-solid fa-wrench text-toggred mr-2"></i>Service<span class="text-toggred">Togg</span></span>
+<body class="bg-bgdark text-gray-200 font-sans antialiased selection:bg-brand selection:text-white">
+    <nav class="bg-black/90 backdrop-blur-lg border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between h-16 items-center">
+            <span class="text-white text-2xl font-black tracking-tighter"><i class="fa-solid fa-layer-group text-brand mr-2"></i>Service<span class="text-brand">Togg</span></span>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#magaza" class="hover:text-brand transition">Aksesuar Mağazası</a>
+                <a href="#randevu" class="hover:text-brand transition">Servis Randevusu</a>
             </div>
-            <div class="hidden md:flex space-x-8">
-                <a href="#bakim" class="text-gray-300 hover:text-white transition">Bakım Takvimi</a>
-                <a href="#aksesuar" class="text-gray-300 hover:text-white transition">Aksesuarlar</a>
-                <a href="#rehber" class="text-gray-300 hover:text-white transition">Bakım Rehberi</a>
+            <div class="flex items-center gap-4">
+                <button class="relative text-gray-400 hover:text-white transition">
+                    <i class="fa-solid fa-cart-shopping text-xl"></i>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-brand text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
+                </button>
             </div>
         </div>
     </nav>
 
-    <div class="relative bg-toggdark overflow-hidden py-16">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h1 class="text-4xl font-extrabold text-white md:text-5xl">Aracınız İçin <span class="text-toggred">Premium</span> Ekosistem</h1>
-            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-400">Togg T10X resmi periyodik bakım maliyetleri ve T-Care süreçleri hakkında en güncel bilgiler.</p>
+    <!-- Hero -->
+    <header class="relative h-[60vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1617531653332-bd46c24f2068?q=80&w=2000')] bg-cover bg-center opacity-30"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-bgdark via-transparent to-transparent"></div>
+        <div class="relative z-10 text-center px-4 max-w-4xl">
+            <span class="bg-brand/20 text-brand border border-brand/30 px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-4 inline-block">Sınıfının En İyisi</span>
+            <h1 class="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">Aracınızı <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400">Geleceğe</span> Hazırlayın</h1>
+            <p class="text-lg md:text-xl text-gray-400 mb-8">Togg T10X ile %100 uyumlu premium aksesuarlar, aerodinamik eklentiler ve yetkili bakım çözümleri.</p>
+            <a href="#magaza" class="bg-brand hover:bg-red-700 text-white font-bold py-4 px-8 rounded-full transition transform hover:scale-105 shadow-[0_0_20px_rgba(229,57,53,0.4)]">Alışverişe Başla</a>
         </div>
-    </div>
+    </header>
 
-    <!-- Gelişmiş Bakım Takvimi -->
-    <div id="bakim" class="max-w-7xl mx-auto px-4 py-12">
-        <h2 class="text-3xl font-bold text-white mb-8 border-l-4 border-toggred pl-4">Akıllı Bakım Hesaplayıcı</h2>
-        <div class="bg-toggcard rounded-xl p-6 shadow-2xl border border-gray-800 flex flex-col md:flex-row gap-8">
-            <div class="w-full md:w-1/3">
-                <label class="block text-sm font-medium text-gray-400 mb-2">Togg Modeli Seçin</label>
-                <select id="modelSelect" class="bg-black text-white w-full rounded-md border border-gray-700 p-3 outline-none focus:border-toggred transition mb-4">
-                    <option value="v2">T10X V2 Uzun Menzil (88.5 kWh)</option>
-                    <option value="v1">T10X V1 Standart (52.4 kWh)</option>
-                </select>
-                <label class="block text-sm font-medium text-gray-400 mb-2">Güncel Kilometreniz</label>
-                <select id="kmSelect" class="bg-black text-white w-full rounded-md border border-gray-700 p-3 outline-none focus:border-toggred transition">
-                    <option value="20000">20.000 KM / 1. Yıl (Ara Bakım)</option>
-                    <option value="40000" selected>40.000 KM / 2. Yıl (Standart Bakım)</option>
-                    <option value="80000">80.000 KM / 4. Yıl (Ağır Bakım)</option>
-                </select>
-                <button onclick="calcMaintenance()" class="mt-6 w-full bg-toggred hover:bg-red-700 text-white font-bold py-3 px-4 rounded-md transition shadow-lg shadow-red-500/30">
-                    <i class="fa-solid fa-cogs mr-2"></i> Detayları Getir
-                </button>
-            </div>
-            <div class="w-full md:w-2/3 bg-black rounded-lg p-6 border border-gray-800">
-                <h3 class="text-xl font-bold text-white mb-4">Mekanik ve Yazılımsal Kontroller</h3>
-                <ul id="partsList" class="space-y-3 text-gray-300">
-                    <!-- Dinamik İçerik -->
-                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> HEPA Filtre / Polen Filtresi Değişimi</li>
-                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Fren Hidrolik Sıvısı Testi & Değişimi</li>
-                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Yüksek Voltaj Kablo İzolasyon Testi</li>
-                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Süspansiyon ve Yürüyen Aksam Tork Kontrolü</li>
-                </ul>
-                <div class="mt-6 pt-4 border-t border-gray-700">
-                    <p class="text-gray-400 text-sm">Tahmini Yetkili Servis Maliyeti (KDV Dahil)</p>
-                    <p id="costTotal" class="text-3xl font-bold text-white mt-1">₺4.850 - ₺5.200</p>
-                    <p id="warnText" class="text-xs text-yellow-500 mt-2"><i class="fa-solid fa-circle-info"></i> Uyarı: Garanti kapsamından çıkmamak için bakımı yetkili servislerde yaptırınız.</p>
+    <!-- Mağaza Modülü -->
+    <section id="magaza" class="max-w-7xl mx-auto px-4 py-20">
+        <h2 class="text-3xl font-black text-white mb-10 border-l-4 border-brand pl-4">Premium Ekipmanlar</h2>
+        <div id="productGrid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- JS ile doldurulacak -->
+        </div>
+    </section>
+
+    <!-- Randevu Modülü -->
+    <section id="randevu" class="bg-card border-y border-gray-800 py-20">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-3xl font-black text-white mb-8 text-center">Yetkili Servis Randevusu</h2>
+            <form onsubmit="handleForm(event)" class="bg-bgdark p-8 rounded-2xl border border-gray-800 shadow-2xl space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Şehir</label>
+                        <select class="w-full bg-card border border-gray-700 rounded-lg p-3 text-white focus:border-brand outline-none">
+                            <option>İstanbul (Maslak T-Care)</option>
+                            <option>Ankara (Söğütözü T-Care)</option>
+                            <option>İzmir (Bornova Yetkili Servis)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Talep Türü</label>
+                        <select class="w-full bg-card border border-gray-700 rounded-lg p-3 text-white focus:border-brand outline-none">
+                            <option>40.000 KM Periyodik Bakım</option>
+                            <option>Yazılım (TruOS) Güncellemesi</option>
+                            <option>Hasar / Kaporta Onarımı</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Plaka veya Şasi No</label>
+                    <input type="text" placeholder="34 TGG 001" class="w-full bg-card border border-gray-700 rounded-lg p-3 text-white focus:border-brand outline-none" required>
+                </div>
+                <button type="submit" class="w-full bg-brand hover:bg-red-700 text-white font-bold py-4 rounded-lg transition">Randevu Oluştur</button>
+            </form>
         </div>
-    </div>
-
-    <!-- SEO Makalesi Bölümü -->
-    <div id="rehber" class="max-w-5xl mx-auto px-4 py-16">
-        <article class="prose prose-invert lg:prose-xl mx-auto text-gray-300">
-            <h1 class="text-3xl font-extrabold text-white mb-6">Togg T10X Periyodik Bakım Kılavuzu: Neden Bakım Gerekir?</h1>
-            <p>İçten yanmalı motorlu araçların (benzin/dizel) aksine, Togg gibi %100 elektrikli (BEV) araçlarda motor yağı, buji, triger kayışı veya şanzıman yağı gibi geleneksel bakım kalemleri bulunmaz. Ancak bu, T10X'in bakıma ihtiyacı olmadığı anlamına gelmez. Güvenliğiniz ve yüksek voltaj bataryanızın ömrü için belirli periyotlarda uzman kontrolü şarttır.</p>
-            
-            <h3 class="text-2xl font-bold text-white mt-8 mb-4">40.000 KM (2. Yıl) Bakımında Neler Yapılır?</h3>
-            <p>Togg resmi bakım takvimine göre ilk büyük periyodik bakım 40.000 km veya 2 yıl (hangisi önce dolarsa) sınırında yapılır. Bu bakımda temel odak noktaları <strong>soğutma sıvıları</strong> ve <strong>yürüyen aksamdır</strong>:</p>
-            <ul class="list-disc pl-6 space-y-2 mt-4">
-                <li><strong>Fren Hidrolik Sıvısı:</strong> Elektrikli araçlarda rejeneratif frenleme kullanıldığı için mekanik frenler daha az kullanılır, ancak hidrolik sıvı zamanla nem çeker ve kaynama noktası düşer. Değişimi hayatidir.</li>
-                <li><strong>HEPA/Polen Filtresi:</strong> Kabin içi hava kalitesi için 2 yılda bir değişimi önerilir.</li>
-                <li><strong>BMS (Battery Management System) Güncellemesi:</strong> Serviste araç bilgisayara bağlanarak hücre voltaj dengeleri ve SoH (State of Health - Batarya Sağlığı) verileri raporlanır.</li>
-            </ul>
-
-            <h3 class="text-2xl font-bold text-white mt-8 mb-4">Batarya Soğutma Sıvısı Ne Zaman Değişir?</h3>
-            <p>80.000 KM veya 4. Yıl bakımında, standart 40.000 km işlemlerine ek olarak <strong>Batarya Termal Yönetim Sıvısı (Coolant)</strong> değişimi yapılır. T10X, bataryayı sıvı ile soğutan ve ısıtan gelişmiş bir termal sisteme sahiptir. Bu sıvının özelliğini yitirmesi kışın bataryanın ısınamamasına, yazın ve ultra hızlı şarjda ise aşırı ısınmasına yol açabilir.</p>
-        </article>
-    </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-black border-t border-gray-800 py-8 text-center text-gray-500">
-        <p>&copy; 2026 ServiceTogg. Tüm hakları saklıdır.</p>
-        <p class="text-xs mt-2">Bu site bağımsız bir bilgi platformudur. Resmi Togg A.Ş. ile bağı yoktur.</p>
+    <footer class="bg-black py-12 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-500 text-sm">
+            <p class="mb-2">&copy; 2026 ServiceTogg. Tüm KVKK ve Gizlilik politikaları saklıdır.</p>
+            <p>Bağımsız e-ticaret platformudur. Togg markası ile resmi bağı yoktur.</p>
+        </div>
     </footer>
 
     <script>
-        function calcMaintenance() {
-            const km = document.getElementById('kmSelect').value;
-            const model = document.getElementById('modelSelect').value;
-            const partsList = document.getElementById('partsList');
-            const costTotal = document.getElementById('costTotal');
-            
-            // Gerçekçi EV bakım algoritması simülasyonu
-            if (km === '20000') {
-                partsList.innerHTML = 
-                    <li><i class="fa-solid fa-check text-yellow-500 mr-2"></i> Genel Yazılım, BMS ve Hata Kodu Tarama</li>
-                    <li><i class="fa-solid fa-check text-yellow-500 mr-2"></i> Alt Takım, Süspansiyon ve Lastik Aşınma Kontrolü</li>
-                    <li><i class="fa-solid fa-check text-yellow-500 mr-2"></i> Cam Suyu İlavesi ve Silecek Kontrolü</li>;
-                costTotal.innerText = '₺1.200 - ₺1.800';
-            } else if (km === '40000') {
-                partsList.innerHTML = 
-                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> HEPA / Polen Filtresi Değişimi</li>
-                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Fren Hidrolik Sıvısı Testi & Değişimi</li>
-                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Yüksek Voltaj Kablo İzolasyon Testi</li>
-                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Süspansiyon ve Yürüyen Aksam Tork Kontrolü</li>;
-                costTotal.innerText = model === 'v2' ? '₺4.850 - ₺5.200' : '₺4.600 - ₺4.900';
-            } else if (km === '80000') {
-                partsList.innerHTML = 
-                    <li><i class="fa-solid fa-check text-red-500 mr-2"></i> Batarya Termal Soğutma Sıvısı Değişimi (Önemli)</li>
-                    <li><i class="fa-solid fa-check text-red-500 mr-2"></i> Redüktör (Şanzıman) Yağı Değişimi</li>
-                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Fren Hidroliği ve Polen Filtresi Değişimi</li>
-                    <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Batarya SoH (State of Health) Raporu Onayı</li>;
-                costTotal.innerText = model === 'v2' ? '₺8.500 - ₺9.800' : '₺8.200 - ₺9.500';
-            }
+        // E-Ticaret Dummy Data
+        const products = [
+            { id: 1, name: "3D Lazer Kesim TPE Paspas (T10X)", price: 2499, img: "fa-car-side", tag: "En Çok Satan" },
+            { id: 2, name: "Uçtan Uca Nano Ekran Koruyucu", price: 850, img: "fa-mobile-screen", tag: "Yeni" },
+            { id: 3, name: "Type-2 Trifaze Şarj Kablosu 22kW", price: 4200, img: "fa-plug-circle-bolt", tag: "Zorunlu İhtiyaç" },
+            { id: 4, name: "Bagaj Havuzu (Kaydırmaz)", price: 1200, img: "fa-box-open", tag: "" },
+            { id: 5, name: "PPF Şeffaf Kaput Koruma", price: 6500, img: "fa-shield-halved", tag: "Premium" },
+            { id: 6, name: "Frunk (Ön Bagaj) Kiti", price: 3800, img: "fa-toolbox", tag: "Modifiye" }
+        ];
+
+        let cart = 0;
+        
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = products.map(p => `
+                <div class="bg-card rounded-2xl overflow-hidden border border-gray-800 hover:border-brand transition duration-300 group">
+                    <div class="h-48 bg-gray-900 flex items-center justify-center relative">
+                        ${p.tag ? `<span class="absolute top-3 left-3 bg-brand text-white text-[10px] font-bold px-2 py-1 rounded">${p.tag}</span>` : ''}
+                        <i class="fa-solid ${p.img} text-6xl text-gray-700 group-hover:text-brand transition duration-500 group-hover:scale-110"></i>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-white font-bold text-lg mb-1 truncate" title="${p.name}">${p.name}</h3>
+                        <p class="text-brand font-black text-xl mb-4">₺${p.price.toLocaleString('tr-TR')}</p>
+                        <button onclick="addToCart()" class="w-full bg-gray-800 hover:bg-brand text-white font-bold py-2.5 rounded-lg transition">Sepete Ekle</button>
+                    </div>
+                </div>
+            `).join('');
         }
+
+        function addToCart() {
+            cart++;
+            const count = document.getElementById('cartCount');
+            count.innerText = cart;
+            count.classList.add('animate-ping');
+            setTimeout(() => count.classList.remove('animate-ping'), 300);
+        }
+
+        function handleForm(e) {
+            e.preventDefault();
+            alert("API Bağlantısı (Stripe/Iyzico) Demo Modundadır. Randevu talebiniz sisteme iletildi.");
+        }
+
+        window.onload = renderProducts;
     </script>
 </body>
 </html>
