@@ -43,6 +43,18 @@
         ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(229, 57, 53, 0.5); }
     </style>
+    <!-- Google Analytics 4 & E-Commerce Event Tracking Hook -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TOGGCONNECTED"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TOGGCONNECTED');
+      function trackEcosystemEvent(eventName, params) {
+        if(typeof gtag === 'function') gtag('event', eventName, params);
+        console.log('[GA4 TRACK]', eventName, params);
+      }
+    </script>
 </head>
 <body class="bg-dark min-h-screen flex flex-col">
 
