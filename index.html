@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Preconnect & DNS-Prefetch Performance Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <title>ServiceTogg | Togg T10X Resmi Servis, Yedek Parça, Batarya Teşhis & T-Care</title>
     <meta name="description" content="Togg T10X resmi servis, yedek parça, OBD-II batarya teşhis ve T-Care uzatılmış garanti platformu. Yetkili servis randevusu ve orijinal aksesuar marketi.">
     <meta name="keywords" content="servicetogg, togg servis randevu, togg yedek parça, togg batarya teşhis, togg obd2 soh, togg t-care garanti, togg periyodik bakım, togg yetkili servis, togg sss">
@@ -142,6 +147,7 @@
         }
     </script>
     <style>
+        html { scroll-behavior: smooth; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #070a12; color: white; overflow-x: hidden; }
         .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1rem; }
         .btn-primary { background: linear-gradient(135deg, #e53935 0%, #b71c1c 100%); color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; transition: all 0.3s; font-weight: 600; }
@@ -202,12 +208,12 @@
             <span class="text-xl font-bold tracking-wider">Service<span class="text-crimson">Togg</span></span>
         </div>
         <nav class="hidden md:flex gap-8 font-medium">
-            <a href="#randevu-al" class="nav-link text-gray-300 hover:text-crimson"><i class="fa-solid fa-calendar-check text-crimson mr-1"></i> Randevu Al</a>`r`n            <a href="#faq" class="nav-link text-gray-300 hover:text-crimson"><i class="fa-solid fa-circle-question text-rose-400 mr-1"></i> SSS</a>`r`n            <a href="https://chargetogg.com" class="nav-link text-gray-400">ChargeTogg</a>
-            <a href="#" class="nav-link active-nav">ServiceTogg</a>
-            <a href="https://toggelectric.com" class="nav-link text-gray-400">ToggElectric</a>
+            <a href="#randevu-al" class="nav-link text-gray-300 hover:text-crimson"><i class="fa-solid fa-calendar-check text-crimson mr-1"></i> Randevu Al</a>`r`n            <a href="#faq" class="nav-link text-gray-300 hover:text-crimson"><i class="fa-solid fa-circle-question text-rose-400 mr-1"></i> SSS</a>`r`n            <a href="https://chargetogg.com" aria-label="ChargeTogg Şarj Haritası" class="nav-link text-gray-400">ChargeTogg</a>
+            <a href="#" aria-label="ServiceTogg Ana Sayfa" class="nav-link active-nav">ServiceTogg</a>
+            <a href="https://toggelectric.com" aria-label="ToggElectric EV Topluluk" class="nav-link text-gray-400">ToggElectric</a>
         </nav>
         <div class="flex gap-4 items-center">
-            <button id="cartBtn" class="relative p-2 hover:text-crimson transition">
+            <button id="cartBtn" aria-label="Alışveriş Sepetini Görüntüle" class="relative p-2 hover:text-crimson transition">
                 <i class="fa-solid fa-shopping-cart text-xl"></i>
                 <span id="cartCount" class="absolute -top-1 -right-1 bg-crimson text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">0</span>
             </button>
@@ -230,8 +236,8 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <h2 class="text-2xl font-bold flex items-center gap-2"><i class="fa-solid fa-box-open text-crimson"></i> Aksesuar & Yedek Parça</h2>
                 <div class="flex gap-2 w-full md:w-auto">
-                    <input type="text" id="searchInput" placeholder="Ürün ara..." class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-crimson w-full md:w-64">
-                    <select id="sortSelect" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm focus:outline-none">
+                    <input type="text" id="searchInput" aria-label="Aksesuar ve yedek parça ara" placeholder="Ürün ara..." class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-crimson w-full md:w-64">
+                    <select id="sortSelect" aria-label="Ürünleri Fiyata Göre Sırala" class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm focus:outline-none">
                         <option value="default" class="text-black">Sıralama</option>
                         <option value="asc" class="text-black">Fiyat: Artan</option>
                         <option value="desc" class="text-black">Fiyat: Azalan</option>
@@ -240,12 +246,12 @@
             </div>
             
             <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide" id="categoryFilters">
-                <button class="px-4 py-1.5 rounded-full bg-crimson text-sm font-medium whitespace-nowrap filter-btn" data-cat="Tümü">Tümü</button>
-                <button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium whitespace-nowrap filter-btn" data-cat="İç Mekan">İç Mekan</button>
-                <button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium whitespace-nowrap filter-btn" data-cat="Şarj & Wallbox">Şarj & Wallbox</button>
-                <button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium whitespace-nowrap filter-btn" data-cat="Dış Koruma">Dış Koruma</button>
-                <button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium whitespace-nowrap filter-btn" data-cat="Performans">Performans</button>
-                <button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium whitespace-nowrap filter-btn" data-cat="Teknoloji">Teknoloji</button>
+                <button class="px-4 py-1.5 rounded-full bg-crimson text-sm font-medium whitespace-nowrap filter-btn" data-cat="Tümü" aria-label="Tüm kategorilerdeki ürünleri göster">Tümü</button>
+                <button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium whitespace-nowrap filter-btn" data-cat="İç Mekan" aria-label="İç Mekan aksesuarlarını filtrele">İç Mekan</button>
+                <button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium whitespace-nowrap filter-btn" data-cat="Şarj & Wallbox" aria-label="Şarj ve Wallbox ürünlerini filtrele">Şarj & Wallbox</button>
+                <button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium whitespace-nowrap filter-btn" data-cat="Dış Koruma" aria-label="Dış Koruma ürünlerini filtrele">Dış Koruma</button>
+                <button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium whitespace-nowrap filter-btn" data-cat="Performans" aria-label="Performans ürünlerini filtrele">Performans</button>
+                <button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium whitespace-nowrap filter-btn" data-cat="Teknoloji" aria-label="Teknoloji ürünlerini filtrele">Teknoloji</button>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="productsGrid">
@@ -262,7 +268,7 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm text-gray-400 mb-1">Araç Modeli</label>
-                        <select class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:border-emerald-400">
+                        <select aria-label="Araç Modeli Seçin" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:border-emerald-400">
                             <option class="text-black">T10X V2 Long Range</option>
                             <option class="text-black">T10X V1 Standard</option>
                             <option class="text-black">T10F Fastback</option>
@@ -271,11 +277,11 @@
                     </div>
                     <div>
                         <label class="block text-sm text-gray-400 mb-1">Şasi No (VIN) - 17 Hane</label>
-                        <input type="text" maxlength="17" placeholder="NLT..." class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none uppercase font-mono">
+                        <input type="text" maxlength="17" placeholder="NLT..." aria-label="Araç Şasi / VIN Numarası" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none uppercase font-mono">
                     </div>
                     <div>
                         <label class="block text-sm text-gray-400 mb-1">DTC Arıza Kodu Seçimi</label>
-                        <select class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none text-red-300 font-mono">
+                        <select aria-label="DTC Arıza Kodu Seçimi" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none text-red-300 font-mono">
                             <option value="none" class="text-black">Arıza Kodu Yok</option>
                             <option value="P0A1F" class="text-black">P0A1F - Batarya Yönetim Sistemi Hatası [Kritik]</option>
                             <option value="U0100" class="text-black">U0100 - Motor Kontrol İletişim Kaybı [Kritik]</option>
@@ -294,7 +300,7 @@
                             <li class="flex justify-between font-bold mt-4 pt-2 border-t border-white/10"><span>Tahmini Tutar:</span> <span class="text-emerald-400">₺450</span></li>
                         </ul>
                     </div>
-                    <button class="w-full btn-primary !bg-emerald-600 hover:!bg-emerald-500 mt-6" onclick="bookService()">Randevu Oluştur</button>
+                    <button class="w-full btn-primary !bg-emerald-600 hover:!bg-emerald-500 mt-6" onclick="bookService()" aria-label="Yetkili Servis Randevusu Oluştur">Randevu Oluştur</button>
                 </div>
             </div>
         </section>
@@ -353,7 +359,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div>
                     <label class="block text-sm text-gray-400 mb-2">Güncel Kilometre: <span id="kmLabel" class="text-white font-bold">50,000</span> KM</label>
-                    <input type="range" id="kmSlider" min="0" max="200000" step="1000" value="50000" class="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-crimson">
+                    <input type="range" id="kmSlider" min="0" max="200000" step="1000" value="50000" aria-label="Araç Güncel Kilometresi" class="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-crimson">
                 </div>
                 <div class="space-y-4">
                     <div>
@@ -386,7 +392,7 @@
                 <div class="absolute top-4 right-4 z-20 glass-panel p-4 bg-black/80 backdrop-blur-md shadow-lg border border-white/10 w-64">
                     <h3 class="font-bold text-sm mb-2 text-white">Acil Servis Çağır</h3>
                     <p class="text-xs text-gray-400 mb-3">Mobil teknisyenimiz konumunuza yönlendirilecektir.</p>
-                    <button class="w-full btn-primary text-sm py-2 flex items-center justify-center gap-2" onclick="simulateDispatch()">
+                    <button class="w-full btn-primary text-sm py-2 flex items-center justify-center gap-2" onclick="simulateDispatch()" aria-label="Konumuma Acil Mobil Servis Çağır">
                         <i class="fa-solid fa-location-crosshairs"></i> Konumuma Çağır
                     </button>
                 </div>
@@ -404,7 +410,7 @@
                         <h2 class="text-3xl font-black text-white mt-1">Canlı Hücre Voltajı & BMS Teşhis Portalı</h2>
                         <p class="text-xs text-slate-400 mt-1">Aracınızdaki standart ELM327 / OBD dongle'a bağlanarak gerçek zamanlı batarya sağlığını ve motor telemetrisini okuyun.</p>
                     </div>
-                    <button onclick="startBluetoothScan()" id="btConnectBtn" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-90 text-white font-black text-xs px-6 py-3.5 rounded-xl flex items-center gap-2 shadow-lg shadow-rose-500/20 transition">
+                    <button onclick="startBluetoothScan()" id="btConnectBtn" aria-label="Bluetooth ile OBD-II Cihazına Bağlan" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-90 text-white font-black text-xs px-6 py-3.5 rounded-xl flex items-center gap-2 shadow-lg shadow-rose-500/20 transition">
                         <i class="fa-brands fa-bluetooth-b"></i> OBD-II Cihazına Bağlan
                     </button>
                 </div>
@@ -447,7 +453,7 @@
                     </div>
                     <div class="text-right whitespace-nowrap">
                         <div class="text-2xl font-black text-white">₺4.900 <span class="text-xs text-slate-400">/ yıl</span></div>
-                        <button onclick="alert('T-Care Uzatılmış Garanti poliçe başvurusu alındı. Ekspertiz onayı için randevunuz oluşturuldu.')" class="mt-2 bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-90 text-white font-black text-xs px-5 py-2.5 rounded-xl transition">
+                        <button onclick="alert('T-Care Uzatılmış Garanti poliçe başvurusu alındı. Ekspertiz onayı için randevunuz oluşturuldu.')" aria-label="T-Care Uzatılmış Garanti Poliçesi Oluştur" class="mt-2 bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-90 text-white font-black text-xs px-5 py-2.5 rounded-xl transition">
                             Poliçe Oluştur
                         </button>
                     </div>
@@ -488,7 +494,7 @@
                             <label for="bookingName" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
                                 <i class="fa-solid fa-user text-rose-400 mr-1.5"></i> Ad Soyad *
                             </label>
-                            <input type="text" id="bookingName" required placeholder="Örn: Ahmet Yılmaz" class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition placeholder-slate-500">
+                            <input type="text" id="bookingName" required aria-label="Randevu İçin Ad Soyad" placeholder="Örn: Ahmet Yılmaz" class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition placeholder-slate-500">
                         </div>
 
                         <!-- Field 2: Telefon -->
@@ -496,7 +502,7 @@
                             <label for="bookingPhone" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
                                 <i class="fa-solid fa-phone text-rose-400 mr-1.5"></i> Telefon Numarası *
                             </label>
-                            <input type="tel" id="bookingPhone" required placeholder="05XX XXX XX XX" class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition placeholder-slate-500">
+                            <input type="tel" id="bookingPhone" required aria-label="Randevu İçin Telefon Numarası" placeholder="05XX XXX XX XX" class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition placeholder-slate-500">
                         </div>
 
                         <!-- Field 3: Araç Modeli -->
@@ -504,7 +510,7 @@
                             <label for="bookingModel" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
                                 <i class="fa-solid fa-car text-amber-400 mr-1.5"></i> Araç Modeli *
                             </label>
-                            <select id="bookingModel" required class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition">
+                            <select id="bookingModel" required aria-label="Randevu Araç Modeli Seçimi" class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition">
                                 <option value="T10X Uzun Menzil">T10X Uzun Menzil</option>
                                 <option value="T10X Standart">T10X Standart</option>
                                 <option value="T10F">T10F</option>
@@ -516,7 +522,7 @@
                             <label for="bookingServiceType" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
                                 <i class="fa-solid fa-screwdriver-wrench text-rose-400 mr-1.5"></i> Servis Türü *
                             </label>
-                            <select id="bookingServiceType" required class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition">
+                            <select id="bookingServiceType" required aria-label="Randevu Servis İşlem Türü" class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition">
                                 <option value="Periyodik Bakım">Periyodik Bakım</option>
                                 <option value="Lastik & Fren">Lastik & Fren</option>
                                 <option value="Yazılım Güncelleme">Yazılım Güncelleme</option>
@@ -529,7 +535,7 @@
                             <label for="bookingDate" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
                                 <i class="fa-solid fa-calendar-days text-amber-400 mr-1.5"></i> Tercih Edilen Tarih *
                             </label>
-                            <input type="date" id="bookingDate" required class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition [color-scheme:dark]">
+                            <input type="date" id="bookingDate" required aria-label="Randevu Tarihi" class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition [color-scheme:dark]">
                         </div>
 
                         <!-- Field 6: Tercih Edilen Saat -->
@@ -537,7 +543,7 @@
                             <label for="bookingTime" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
                                 <i class="fa-solid fa-clock text-amber-400 mr-1.5"></i> Tercih Edilen Saat *
                             </label>
-                            <select id="bookingTime" required class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition">
+                            <select id="bookingTime" required aria-label="Randevu Saati Seçimi" class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition">
                                 <option value="09:00">09:00 - Sabah Seansı</option>
                                 <option value="10:30">10:30 - Sabah Seansı</option>
                                 <option value="13:30">13:30 - Öğle Seansı</option>
@@ -553,7 +559,7 @@
                             <i class="fa-solid fa-shield-halved text-emerald-400"></i>
                             <span>Orijinal Togg Parça ve TruOS Sertifikalı Uzman Güvencesi</span>
                         </div>
-                        <button type="submit" id="btnSubmitBooking" class="w-full sm:w-auto bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-black text-sm py-4 px-8 rounded-2xl shadow-lg shadow-rose-500/25 flex items-center justify-center gap-2 transition transform active:scale-95">
+                        <button type="submit" id="btnSubmitBooking" aria-label="Yetkili Servis Randevusu Talebini Gönder" class="w-full sm:w-auto bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-black text-sm py-4 px-8 rounded-2xl shadow-lg shadow-rose-500/25 flex items-center justify-center gap-2 transition transform active:scale-95">
                             <i class="fa-solid fa-check-circle"></i> Randevu Oluştur
                         </button>
                     </div>
@@ -570,7 +576,7 @@
                             <p class="text-sm text-slate-300 mt-1" id="bookingSuccessSummary">Randevu bilgileriniz ve onay kodunuz SMS ile iletildi.</p>
                             <div class="mt-4 flex flex-wrap items-center gap-3 text-xs">
                                 <span class="bg-black/30 px-3 py-1.5 rounded-lg border border-white/10 text-emerald-400 font-mono font-bold" id="bookingSuccessId">Randevu No: TR-2026-8921</span>
-                                <button type="button" onclick="resetBookingForm()" class="text-slate-300 hover:text-white underline ml-auto">Yeni Randevu Oluştur</button>
+                                <button type="button" onclick="resetBookingForm()" aria-label="Yeni Servis Randevusu Başlat" class="text-slate-300 hover:text-white underline ml-auto">Yeni Randevu Oluştur</button>
                             </div>
                         </div>
                     </div>
@@ -671,7 +677,7 @@
     <div id="cartDrawer" class="fixed inset-y-0 right-0 w-full md:w-96 glass-panel !rounded-none !border-y-0 !border-r-0 border-l border-white/10 bg-[#070a12]/95 backdrop-blur-2xl z-[60] transform translate-x-full transition-transform duration-300 flex flex-col">
         <div class="p-6 border-b border-white/10 flex justify-between items-center">
             <h2 class="text-xl font-bold"><i class="fa-solid fa-shopping-cart text-crimson mr-2"></i> Sepetim</h2>
-            <button id="closeCartBtn" class="text-gray-400 hover:text-white"><i class="fa-solid fa-times text-xl"></i></button>
+            <button id="closeCartBtn" aria-label="Sepeti Kapat" class="text-gray-400 hover:text-white"><i class="fa-solid fa-times text-xl"></i></button>
         </div>
         <div class="flex-grow overflow-y-auto p-4 space-y-4" id="cartItemsContainer">
             <!-- Items injected by JS -->
@@ -681,7 +687,7 @@
                 <span class="text-gray-400">Ara Toplam</span>
                 <span class="font-bold text-lg" id="cartTotal">₺0</span>
             </div>
-            <button id="checkoutBtn" class="w-full btn-primary flex justify-center items-center gap-2">
+            <button id="checkoutBtn" aria-label="Güvenli Ödeme Adımına İlerle" class="w-full btn-primary flex justify-center items-center gap-2">
                 <i class="fa-solid fa-lock"></i> Güvenli Ödeme
             </button>
         </div>
@@ -690,7 +696,7 @@
     <!-- Payment Simulation Modal -->
     <div id="paymentModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[70] hidden flex items-center justify-center p-4">
         <div class="glass-panel bg-[#0a0f1a] w-full max-w-md p-6 space-y-6 relative border-t-4 border-t-crimson">
-            <button onclick="closePayment()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-times"></i></button>
+            <button onclick="closePayment()" aria-label="Ödeme Penceresini Kapat" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-times"></i></button>
             <div class="text-center">
                 <i class="fa-solid fa-shield-check text-4xl text-blue-500 mb-2"></i>
                 <h3 class="text-xl font-bold">iyzico 3D Secure Simulator</h3>
@@ -704,13 +710,13 @@
                 </div>
                 <div>
                     <label class="block text-xs text-gray-500 mb-1">Kart Numarası</label>
-                    <input type="text" value="4321 5555 **** 1111" disabled class="w-full bg-white/5 border border-white/10 rounded px-3 py-2 text-gray-400 text-sm">
+                    <input type="text" value="4321 5555 **** 1111" disabled aria-label="Maskelenmiş Test Kredi Kartı Numarası" class="w-full bg-white/5 border border-white/10 rounded px-3 py-2 text-gray-400 text-sm">
                 </div>
                 <div>
                     <label class="block text-xs text-gray-500 mb-1">SMS Şifresi (3D Secure)</label>
-                    <input type="text" id="smsCode" placeholder="234567" class="w-full bg-white/10 border border-white/20 rounded px-3 py-2 text-white text-center tracking-widest text-lg focus:outline-none focus:border-blue-500">
+                    <input type="text" id="smsCode" placeholder="234567" aria-label="3D Secure SMS Onay Kodu" class="w-full bg-white/10 border border-white/20 rounded px-3 py-2 text-white text-center tracking-widest text-lg focus:outline-none focus:border-blue-500">
                 </div>
-                <button onclick="processPayment()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold transition flex justify-center items-center gap-2">
+                <button onclick="processPayment()" aria-label="3D Secure Ödemesini Tamamla" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold transition flex justify-center items-center gap-2">
                     <i class="fa-solid fa-check-circle"></i> Ödemeyi Tamamla
                 </button>
             </div>
@@ -827,7 +833,7 @@
                                 ${p.oldPrice ? `<div class="text-xs line-through text-gray-500">₺${p.oldPrice.toLocaleString('tr-TR')}</div>` : ''}
                                 <div class="font-bold text-lg text-white">₺${p.price.toLocaleString('tr-TR')}</div>
                             </div>
-                            <button onclick="addToCart(${p.id})" class="h-10 w-10 bg-white/10 hover:bg-crimson rounded-full flex items-center justify-center transition disabled:opacity-50" ${!p.stock ? 'disabled' : ''}>
+                            <button onclick="addToCart(${p.id})" aria-label="${p.name} ürününü sepete ekle" class="h-10 w-10 bg-white/10 hover:bg-crimson rounded-full flex items-center justify-center transition disabled:opacity-50" ${!p.stock ? 'disabled' : ''}>
                                 <i class="fa-solid ${p.stock ? 'fa-plus' : 'fa-ban'}"></i>
                             </button>
                         </div>
@@ -900,9 +906,9 @@
                                 <div class="text-crimson font-bold text-sm">₺${item.price.toLocaleString('tr-TR')}</div>
                             </div>
                             <div class="flex items-center gap-2 bg-black/40 rounded p-1">
-                                <button onclick="updateCart(${item.id}, -1)" class="w-6 h-6 hover:text-crimson"><i class="fa-solid fa-minus text-xs"></i></button>
+                                <button onclick="updateCart(${item.id}, -1)" aria-label="Ürün adedini bir azalt" class="w-6 h-6 hover:text-crimson"><i class="fa-solid fa-minus text-xs"></i></button>
                                 <span class="text-sm font-mono">${item.qty}</span>
-                                <button onclick="updateCart(${item.id}, 1)" class="w-6 h-6 hover:text-emerald-400"><i class="fa-solid fa-plus text-xs"></i></button>
+                                <button onclick="updateCart(${item.id}, 1)" aria-label="Ürün adedini bir artır" class="w-6 h-6 hover:text-emerald-400"><i class="fa-solid fa-plus text-xs"></i></button>
                             </div>
                         </div>
                     `;
@@ -1045,7 +1051,7 @@
     <!-- ADMIN LOGIN MODAL & CONTROL DASHBOARD -->
     <div id="adminLoginModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
         <div class="glass-card max-w-md w-full p-8 rounded-3xl border border-rose-500/40 shadow-2xl relative">
-            <button onclick="closeAdminLogin()" class="absolute top-5 right-5 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <button onclick="closeAdminLogin()" aria-label="Yönetici Giriş Penceresini Kapat" class="absolute top-5 right-5 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
             <div class="text-center mb-6">
                 <div class="w-14 h-14 rounded-2xl bg-rose-500/20 border border-rose-400 flex items-center justify-center mx-auto mb-3 text-rose-400 text-2xl shadow-lg shadow-rose-500/20">
                     <i class="fa-solid fa-user-gear"></i>
@@ -1056,13 +1062,13 @@
             <form onsubmit="handleAdminLogin(event, 'servicetogg')" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Kullanıcı Adı</label>
-                    <input type="text" id="adminUser" required placeholder="Kullanıcı adınızı girin" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white outline-none focus:border-rose-400 font-mono">
+                    <input type="text" id="adminUser" required placeholder="Kullanıcı adınızı girin" aria-label="Yönetici Kullanıcı Adı" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white outline-none focus:border-rose-400 font-mono">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Şifre</label>
-                    <input type="password" id="adminPass" required placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white outline-none focus:border-rose-400 font-mono">
+                    <input type="password" id="adminPass" required placeholder="••••••••" aria-label="Yönetici Parolası" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white outline-none focus:border-rose-400 font-mono">
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-rose-500 to-amber-500 text-white font-black py-3.5 rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-rose-500/20">
+                <button type="submit" aria-label="Yönetici Paneline Giriş Yap" class="w-full bg-gradient-to-r from-rose-500 to-amber-500 text-white font-black py-3.5 rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-rose-500/20">
                     <i class="fa-solid fa-lock-open mr-1.5"></i> Giriş Yap
                 </button>
             </form>
@@ -1086,10 +1092,10 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
-                    <button onclick="adminLogout()" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-400 border border-rose-500/30 px-4 py-2 rounded-xl text-xs font-bold transition">
+                    <button onclick="adminLogout()" aria-label="Yönetici Oturumundan Çıkış Yap" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-400 border border-rose-500/30 px-4 py-2 rounded-xl text-xs font-bold transition">
                         <i class="fa-solid fa-arrow-right-from-bracket mr-1"></i> Çıkış Yap
                     </button>
-                    <button onclick="closeAdminDashboard()" class="text-slate-400 hover:text-white p-2 text-lg"><i class="fa-solid fa-xmark"></i></button>
+                    <button onclick="closeAdminDashboard()" aria-label="Yönetici Panelini Kapat" class="text-slate-400 hover:text-white p-2 text-lg"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
 
@@ -1316,8 +1322,8 @@
 <h3 class="text-xl font-bold text-white mb-2"><i class="fas fa-envelope-open-text text-emerald-400 mr-2"></i>Bultenimize Abone Olun</h3>
 <p class="text-gray-400 text-sm mb-4">EV dunyasindan en son gelismeler, firsatlar ve guncellemeler</p>
 <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-<input type="email" id="nlEmail" placeholder="e-posta@adresiniz.com" class="flex-1 bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-emerald-500 focus:outline-none text-sm">
-<button onclick="document.getElementById('nlEmail').value?((document.getElementById('nlMsg').textContent='Basariyla abone oldunuz!'),document.getElementById('nlMsg').classList.remove('hidden')):0" class="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold px-6 py-3 rounded-xl hover:scale-105 transition-all text-sm whitespace-nowrap">Abone Ol</button>
+<input type="email" id="nlEmail" aria-label="E-Bülten E-posta Adresi" placeholder="e-posta@adresiniz.com" class="flex-1 bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-emerald-500 focus:outline-none text-sm">
+<button aria-label="E-Bültene Abone Ol" onclick="document.getElementById('nlEmail').value?((document.getElementById('nlMsg').textContent='Basariyla abone oldunuz!'),document.getElementById('nlMsg').classList.remove('hidden')):0" class="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold px-6 py-3 rounded-xl hover:scale-105 transition-all text-sm whitespace-nowrap">Abone Ol</button>
 </div>
 <p id="nlMsg" class="hidden text-emerald-400 text-sm mt-3 font-semibold"></p>
 </div>
@@ -1409,5 +1415,21 @@
         </details>
     </div>
 </section>
+<!-- WAVE 2: Intersection Observer Fade-In Animations & Performance -->
+<style>
+html{scroll-behavior:smooth}
+.fade-section{opacity:0;transform:translateY(30px);transition:opacity 0.8s ease,transform 0.8s ease}
+.fade-section.visible{opacity:1;transform:translateY(0)}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+var sections=document.querySelectorAll('section');
+sections.forEach(function(s){s.classList.add('fade-section')});
+var observer=new IntersectionObserver(function(entries){
+entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})
+},{threshold:0.1});
+sections.forEach(function(s){observer.observe(s)});
+});
+</script>
 </body>
 </html>
