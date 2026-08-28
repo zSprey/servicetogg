@@ -1,72 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ServiceTogg | Togg T10X Resmi Servis, Yedek Parça, Batarya Teşhis & T-Care</title>
-    <meta name="description" content="Togg T10X resmi servis, yedek parça, OBD-II batarya teşhis ve T-Care uzatılmış garanti platformu. Yetkili servis randevusu ve orijinal aksesuar marketi.">
-    <meta name="keywords" content="servicetogg, togg servis randevu, togg yedek parça, togg batarya teşhis, togg obd2 soh, togg t-care garanti, togg periyodik bakım, togg yetkili servis">
-    <link rel="canonical" href="https://servicetogg.com/">
-
-    <!-- OpenGraph & Social Meta -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://servicetogg.com/">
-    <meta property="og:title" content="ServiceTogg | Togg T10X Servis, Parça ve Batarya Teşhis">
-    <meta property="og:description" content="Togg T10X resmi servis, yedek parça, OBD-II batarya teşhis ve T-Care uzatılmış garanti platformu">
-    <meta property="og:image" content="/assets/images/togg_charging_hero.jpg">
-
-    <!-- Twitter Card Meta -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ServiceTogg | Togg T10X Servis, Parça ve Batarya Teşhis">
-    <meta name="twitter:description" content="Togg T10X resmi servis, yedek parça, OBD-II batarya teşhis ve T-Care uzatılmış garanti platformu">
-    <meta name="twitter:image" content="/assets/images/togg_charging_hero.jpg">
-
-    <!-- Schema.org AutoRepair JSON-LD -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "AutoRepair",
-      "name": "ServiceTogg",
-      "description": "Togg T10X resmi servis, yedek parça, OBD-II batarya teşhis ve T-Care uzatılmış garanti platformu",
-      "url": "https://servicetogg.com",
-      "areaServed": "TR"
-    }
-    </script>
-
-    <!-- Schema.org BreadcrumbList JSON-LD -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Ana Sayfa",
-          "item": "https://servicetogg.com/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Servis Randevusu",
-          "item": "https://servicetogg.com/#randevu"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Yedek Parça & Aksesuar",
-          "item": "https://servicetogg.com/#market"
-        },
-        {
-          "@type": "ListItem",
-          "position": 4,
-          "name": "OBD-II Batarya Teşhis",
-          "item": "https://servicetogg.com/#teshis"
-        }
-      ]
-    }
-    </script>
-
+    <title>ServiceTogg - Servis & Aksesuar</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -152,7 +89,7 @@
             <span class="text-xl font-bold tracking-wider">Service<span class="text-crimson">Togg</span></span>
         </div>
         <nav class="hidden md:flex gap-8 font-medium">
-            <a href="https://chargetogg.com" class="nav-link text-gray-400">ChargeTogg</a>
+            <a href="#randevu-al" class="nav-link text-gray-300 hover:text-crimson"><i class="fa-solid fa-calendar-check text-crimson mr-1"></i> Randevu Al</a>`r`n            <a href="https://chargetogg.com" class="nav-link text-gray-400">ChargeTogg</a>
             <a href="#" class="nav-link active-nav">ServiceTogg</a>
             <a href="https://toggelectric.com" class="nav-link text-gray-400">ToggElectric</a>
         </nav>
@@ -400,6 +337,129 @@
                         <button onclick="alert('T-Care Uzatılmış Garanti poliçe başvurusu alındı. Ekspertiz onayı için randevunuz oluşturuldu.')" class="mt-2 bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-90 text-white font-black text-xs px-5 py-2.5 rounded-xl transition">
                             Poliçe Oluştur
                         </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SERVİS RANDEVU ALMA FORMU -->
+        <section id="randevu-al" class="py-16 px-4 sm:px-6 max-w-7xl mx-auto">
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-[#121624] to-[#070a12] border border-rose-500/20 backdrop-blur-xl p-6 sm:p-10 shadow-2xl shadow-rose-950/20">
+                <!-- Ambient Glow Background -->
+                <div class="absolute -top-24 -right-24 w-96 h-96 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Section Header -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-6 border-b border-white/10 relative z-10 gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-black uppercase tracking-wider mb-3">
+                            <i class="fa-solid fa-calendar-check animate-pulse"></i> Online Servis Rezervasyonu
+                        </div>
+                        <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                            Yetkili Togg Servis Noktası <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-amber-500">Randevu Sistemi</span>
+                        </h2>
+                        <p class="text-slate-400 text-sm mt-2 max-w-2xl">
+                            Togg T10X ve T10F araçlarınız için periyodik bakım, TruOS yazılım güncellemesi, batarya SoH teşhisi ve lastik/fren işlemlerinizi uzman sertifikalı teknisyenlerimizle randevulayın.
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-2xl border border-white/10 text-xs text-slate-300">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
+                        <span>81 İlde Mobil & Sabit Servis Ağı</span>
+                    </div>
+                </div>
+
+                <!-- Form Grid -->
+                <form id="serviceBookingForm" onsubmit="handleServiceBooking(event)" class="relative z-10 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Field 1: Ad Soyad -->
+                        <div>
+                            <label for="bookingName" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                                <i class="fa-solid fa-user text-rose-400 mr-1.5"></i> Ad Soyad *
+                            </label>
+                            <input type="text" id="bookingName" required placeholder="Örn: Ahmet Yılmaz" class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition placeholder-slate-500">
+                        </div>
+
+                        <!-- Field 2: Telefon -->
+                        <div>
+                            <label for="bookingPhone" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                                <i class="fa-solid fa-phone text-rose-400 mr-1.5"></i> Telefon Numarası *
+                            </label>
+                            <input type="tel" id="bookingPhone" required placeholder="05XX XXX XX XX" class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition placeholder-slate-500">
+                        </div>
+
+                        <!-- Field 3: Araç Modeli -->
+                        <div>
+                            <label for="bookingModel" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                                <i class="fa-solid fa-car text-amber-400 mr-1.5"></i> Araç Modeli *
+                            </label>
+                            <select id="bookingModel" required class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition">
+                                <option value="T10X Uzun Menzil">T10X Uzun Menzil</option>
+                                <option value="T10X Standart">T10X Standart</option>
+                                <option value="T10F">T10F</option>
+                            </select>
+                        </div>
+
+                        <!-- Field 4: Servis Türü -->
+                        <div>
+                            <label for="bookingServiceType" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                                <i class="fa-solid fa-screwdriver-wrench text-rose-400 mr-1.5"></i> Servis Türü *
+                            </label>
+                            <select id="bookingServiceType" required class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition">
+                                <option value="Periyodik Bakım">Periyodik Bakım</option>
+                                <option value="Lastik & Fren">Lastik & Fren</option>
+                                <option value="Yazılım Güncelleme">Yazılım Güncelleme</option>
+                                <option value="Batarya Teşhis">Batarya Teşhis</option>
+                            </select>
+                        </div>
+
+                        <!-- Field 5: Tercih Edilen Tarih -->
+                        <div>
+                            <label for="bookingDate" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                                <i class="fa-solid fa-calendar-days text-amber-400 mr-1.5"></i> Tercih Edilen Tarih *
+                            </label>
+                            <input type="date" id="bookingDate" required class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition [color-scheme:dark]">
+                        </div>
+
+                        <!-- Field 6: Tercih Edilen Saat -->
+                        <div>
+                            <label for="bookingTime" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                                <i class="fa-solid fa-clock text-amber-400 mr-1.5"></i> Tercih Edilen Saat *
+                            </label>
+                            <select id="bookingTime" required class="w-full bg-[#070a12] border border-white/15 focus:border-rose-500 rounded-2xl px-4 py-3.5 text-white font-medium text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 transition">
+                                <option value="09:00">09:00 - Sabah Seansı</option>
+                                <option value="10:30">10:30 - Sabah Seansı</option>
+                                <option value="13:30">13:30 - Öğle Seansı</option>
+                                <option value="15:00">15:00 - Öğleden Sonra</option>
+                                <option value="16:30">16:30 - Akşamüstü Seansı</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Submit & Guarantee Banner -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/10">
+                        <div class="flex items-center gap-2 text-xs text-slate-400">
+                            <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                            <span>Orijinal Togg Parça ve TruOS Sertifikalı Uzman Güvencesi</span>
+                        </div>
+                        <button type="submit" id="btnSubmitBooking" class="w-full sm:w-auto bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-black text-sm py-4 px-8 rounded-2xl shadow-lg shadow-rose-500/25 flex items-center justify-center gap-2 transition transform active:scale-95">
+                            <i class="fa-solid fa-check-circle"></i> Randevu Oluştur
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Success Confirmation Card (Hidden by default, shown upon submit) -->
+                <div id="bookingSuccessBox" class="hidden mt-6 p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-white relative z-10">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl shrink-0 font-bold">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <h4 class="text-lg font-black text-white">Servis Randevunuz Başarıyla Alındı!</h4>
+                            <p class="text-sm text-slate-300 mt-1" id="bookingSuccessSummary">Randevu bilgileriniz ve onay kodunuz SMS ile iletildi.</p>
+                            <div class="mt-4 flex flex-wrap items-center gap-3 text-xs">
+                                <span class="bg-black/30 px-3 py-1.5 rounded-lg border border-white/10 text-emerald-400 font-mono font-bold" id="bookingSuccessId">Randevu No: TR-2026-8921</span>
+                                <button type="button" onclick="resetBookingForm()" class="text-slate-300 hover:text-white underline ml-auto">Yeni Randevu Oluştur</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -951,6 +1011,103 @@
         }
       });
     </script>
+    <!-- ServiceTogg Booking JS -->
+    <script>
+    function handleServiceBooking(e) {
+        e.preventDefault();
+        const name = document.getElementById('bookingName').value.trim();
+        const phone = document.getElementById('bookingPhone').value.trim();
+        const model = document.getElementById('bookingModel').value;
+        const service = document.getElementById('bookingServiceType').value;
+        const date = document.getElementById('bookingDate').value;
+        const time = document.getElementById('bookingTime').value;
+
+        if (!name || !phone || !date) {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Eksik Bilgi',
+                    text: 'Lütfen tüm zorunlu alanları doldurun.',
+                    background: '#0d1322',
+                    color: '#fff',
+                    confirmButtonColor: '#e53935'
+                });
+            } else {
+                alert('Lütfen tüm zorunlu alanları doldurun.');
+            }
+            return;
+        }
+
+        const bookingId = 'TOGG-' + Math.floor(100000 + Math.random() * 900000);
+        const summaryText = Sayın <strong></strong>, <strong></strong> aracınız için <strong></strong> günü saat <strong></strong> seansında <em></em> randevunuz sisteme kaydedildi.;
+
+        const successBox = document.getElementById('bookingSuccessBox');
+        const summaryEl = document.getElementById('bookingSuccessSummary');
+        const idEl = document.getElementById('bookingSuccessId');
+
+        if (summaryEl) summaryEl.innerHTML = summaryText;
+        if (idEl) idEl.innerText = Randevu Kodu: ;
+        if (successBox) {
+            successBox.classList.remove('hidden');
+            successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                icon: 'success',
+                title: 'Randevunuz Oluşturuldu!',
+                html: <div class="text-left text-sm space-y-2 mt-3">
+                         <p><strong>Randevu Kodu:</strong> <span class="text-emerald-400 font-mono font-bold"></span></p>
+                         <p><strong>Müşteri:</strong> </p>
+                         <p><strong>Araç:</strong> </p>
+                         <p><strong>Hizmet:</strong> </p>
+                         <p><strong>Tarih & Saat:</strong>  | </p>
+                         <p class="text-xs text-slate-400 pt-2 border-t border-white/10">Bilgilendirme ve servis konumu SMS ile <strong></strong> numarasına iletilmiştir.</p>
+                       </div>,
+                background: '#0d1322',
+                color: '#fff',
+                confirmButtonText: 'Harika, Teşekkürler',
+                confirmButtonColor: '#e53935'
+            });
+        }
+
+        try {
+            const bookings = JSON.parse(localStorage.getItem('servicetogg_bookings') || '[]');
+            bookings.push({ id: bookingId, name, phone, model, service, date, time, timestamp: new Date().toISOString() });
+            localStorage.setItem('servicetogg_bookings', JSON.stringify(bookings));
+        } catch(err) {
+            console.warn('Booking storage exception:', err);
+        }
+    }
+
+    function resetBookingForm() {
+        const form = document.getElementById('serviceBookingForm');
+        if (form) form.reset();
+        const successBox = document.getElementById('bookingSuccessBox');
+        if (successBox) successBox.classList.add('hidden');
+        initBookingDatePicker();
+    }
+
+    function initBookingDatePicker() {
+        const dateInput = document.getElementById('bookingDate');
+        if (dateInput) {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const yyyy = tomorrow.getFullYear();
+            const mm = String(tomorrow.getMonth() + 1).padStart(2, '0');
+            const dd = String(tomorrow.getDate()).padStart(2, '0');
+            dateInput.min = ${yyyy}--;
+            if (!dateInput.value) {
+                dateInput.value = ${yyyy}--;
+            }
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBookingDatePicker);
+    } else {
+        initBookingDatePicker();
+    }
+    </script>
 </body>
 </html>
-
