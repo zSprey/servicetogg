@@ -713,7 +713,7 @@
 
             // Initialize Leaflet Map
             const map = L.map('map').setView([39.92077, 32.85411], 6); // Center of Turkey
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors'
             }).addTo(map);
 
