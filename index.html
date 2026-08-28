@@ -857,5 +857,12 @@
     function triggerDailySeoBot() {
         alert("Günlük Otonom SEO Botu tetiklendi. Sitemap.xml ve yeni haber akışı güncelleniyor...");
     }</script>
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash === '#admin' || window.location.search.includes('admin')) {
+          if (typeof openAdminLogin === 'function') openAdminLogin();
+        }
+      });
+    </script>
 </body>
 </html>
