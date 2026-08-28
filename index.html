@@ -199,7 +199,24 @@
       } catch(e){}
     </script>
 </head>
-<body class="bg-dark min-h-screen flex flex-col">
+<body class="bg-dark min-h-screen flex flex-col"> 
+    <!-- Top Ecosystem Header Bar -->
+    <div class="bg-[#03050a] border-b border-white/5 py-1.5 px-4 text-[11px] font-bold text-slate-400">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-black bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-rose-400 mr-1 animate-ping"></span> 7/24 SERVİS
+                </span>
+                <span class="hidden sm:inline text-slate-500">Togg Connected Mobility Ekosistemi</span>
+            </div>
+            <div class="flex items-center gap-5">
+                <a href="https://chargetogg.com" aria-label="ChargeTogg Şarj Haritası" class="hover:text-white transition flex items-center gap-1"><i class="fa-solid fa-bolt"></i> ChargeTogg</a>
+                <a href="https://servicetogg.com" aria-label="ServiceTogg Ana Sayfa" class="text-crimson flex items-center gap-1 font-extrabold"><i class="fa-solid fa-wrench"></i> ServiceTogg</a>
+                <a href="https://toggelectric.com" aria-label="ToggElectric EV Topluluk" class="hover:text-white transition flex items-center gap-1"><i class="fa-solid fa-comments"></i> ToggElectric</a>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Header -->
     <header class="fixed w-full top-0 z-50 glass-panel !border-0 !border-b !rounded-none border-white/10 px-6 py-4 flex justify-between items-center">
@@ -1430,6 +1447,58 @@ entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible
 },{threshold:0.1});
 sections.forEach(function(s){observer.observe(s)});
 });
+</script>
+<!-- WAVE 3: Back to Top Floating Button & Cookie Consent Banner -->
+<button id="backToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Sayfa Başına Dön" class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-emerald-500/80 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 flex items-center justify-center transition-all duration-300 opacity-0 pointer-events-none hover:scale-110">
+    <i class="fa-solid fa-arrow-up text-lg"></i>
+</button>
+
+<div id="cookieConsentBanner" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 max-w-md z-50 p-4 rounded-2xl bg-slate-950/95 backdrop-blur-xl border border-white/10 shadow-2xl transition-all duration-500 transform translate-y-24 opacity-0 pointer-events-none flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+    <div class="text-slate-300 flex items-center gap-2">
+        <i class="fa-solid fa-cookie-bite text-amber-400 text-base shrink-0"></i>
+        <span>Bu site deneyiminizi iyileştirmek için çerezler kullanmaktadır.</span>
+    </div>
+    <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+        <button onclick="acceptCookieConsent()" aria-label="Çerezleri Kabul Et" class="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold transition shadow-md">
+            Kabul Et
+        </button>
+    </div>
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+    var btn = document.getElementById('backToTopBtn');
+    if (btn) {
+        if (window.scrollY > 300) {
+            btn.classList.remove('opacity-0', 'pointer-events-none');
+            btn.classList.add('opacity-100');
+        } else {
+            btn.classList.add('opacity-0', 'pointer-events-none');
+            btn.classList.remove('opacity-100');
+        }
+    }
+});
+
+function initCookieConsent() {
+    if (!localStorage.getItem('cookie_consent_accepted')) {
+        setTimeout(function() {
+            var banner = document.getElementById('cookieConsentBanner');
+            if (banner) {
+                banner.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+                banner.classList.add('translate-y-0', 'opacity-100');
+            }
+        }, 800);
+    }
+}
+function acceptCookieConsent() {
+    localStorage.setItem('cookie_consent_accepted', 'true');
+    var banner = document.getElementById('cookieConsentBanner');
+    if (banner) {
+        banner.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+        banner.classList.remove('translate-y-0', 'opacity-100');
+    }
+}
+document.addEventListener('DOMContentLoaded', initCookieConsent);
 </script>
 </body>
 </html>
