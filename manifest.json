@@ -1,0 +1,12 @@
+{
+  "name": "ServiceTogg | Togg Servis, Yedek Parca ve Batarya Teshis",
+  "short_name": "Servicetogg",
+  "description": "Togg T10X resmi servis randevu sistemi, Web Bluetooth OBD-II batarya teshis, yedek parca e-ticaret ve T-Care uzatilmis garanti platformu.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050811",
+  "theme_color": "#10b981",
+  "icons": [
+    {"src": "/favicon.ico", "sizes": "64x64", "type": "image/x-icon"}
+  ]
+}
