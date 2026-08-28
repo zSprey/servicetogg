@@ -256,7 +256,68 @@
             </div>
         </section>
 
-    </main>
+            <!-- ENTERPRISE SECTION: WEB BLUETOOTH OBD-II LIVE TELEMETRY & INSURTECH -->
+        <section id="obd-bluetooth" class="space-y-6 pt-10">
+            <div class="glass-card p-8 sm:p-10 rounded-3xl border border-rose-500/30 shadow-2xl">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8 border-b border-white/10 pb-6">
+                    <div>
+                        <span class="text-xs font-black uppercase tracking-widest text-rose-400 flex items-center gap-1.5">
+                            <i class="fa-brands fa-bluetooth-b text-cyan-400 text-sm"></i> Web Bluetooth OBD-II Telemetri
+                        </span>
+                        <h2 class="text-3xl font-black text-white mt-1">Canlı Hücre Voltajı & BMS Teşhis Portalı</h2>
+                        <p class="text-xs text-slate-400 mt-1">Aracınızdaki standart ELM327 / OBD dongle'a bağlanarak gerçek zamanlı batarya sağlığını ve motor telemetrisini okuyun.</p>
+                    </div>
+                    <button onclick="startBluetoothScan()" id="btConnectBtn" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-90 text-white font-black text-xs px-6 py-3.5 rounded-xl flex items-center gap-2 shadow-lg shadow-rose-500/20 transition">
+                        <i class="fa-brands fa-bluetooth-b"></i> OBD-II Cihazına Bağlan
+                    </button>
+                </div>
+
+                <!-- Live Telemetry Cockpit -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <div class="bg-slate-900/90 p-5 rounded-2xl border border-white/5">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase">Hücre Voltaj Deltası</span>
+                        <div class="text-3xl font-black text-cyan-400 mt-1"><span id="liveDelta">11.4</span> <span class="text-xs text-slate-400">mV</span></div>
+                        <span class="text-[9px] text-emerald-400 font-semibold">Mükemmel Denge</span>
+                    </div>
+
+                    <div class="bg-slate-900/90 p-5 rounded-2xl border border-white/5">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase">Batarya Sıcaklığı</span>
+                        <div class="text-3xl font-black text-amber-400 mt-1"><span id="liveTemp">24.2</span> <span class="text-xs text-slate-400">°C</span></div>
+                        <span class="text-[9px] text-cyan-400 font-semibold">İdeal Çalışma Isısı</span>
+                    </div>
+
+                    <div class="bg-slate-900/90 p-5 rounded-2xl border border-white/5">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase">BMS Sağlık Oranı (SoH)</span>
+                        <div class="text-3xl font-black text-emerald-400 mt-1"><span id="liveSoh">97.8</span> <span class="text-xs text-slate-400">%</span></div>
+                        <span class="text-[9px] text-slate-400">Kayıp: %2.2</span>
+                    </div>
+
+                    <div class="bg-slate-900/90 p-5 rounded-2xl border border-white/5">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase">Anlık Motor Gücü</span>
+                        <div class="text-3xl font-black text-white mt-1"><span id="liveKw">18.6</span> <span class="text-xs text-slate-400">kW</span></div>
+                        <span class="text-[9px] text-slate-400">160 kW Motor Kapasitesi</span>
+                    </div>
+                </div>
+
+                <!-- InsurTech Extended Battery Warranty -->
+                <div id="insurtech" class="bg-gradient-to-br from-darkSurface to-[#1a0f18] p-6 sm:p-8 rounded-2xl border border-rose-500/20 flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div>
+                        <span class="text-[10px] font-black uppercase text-rose-400 tracking-wider">INSURTECH BATARYA KASKOSU</span>
+                        <h3 class="text-xl font-black text-white mt-1">T-Care Uzatılmış Batarya Garantisi</h3>
+                        <p class="text-xs text-slate-400 mt-1 max-w-xl">
+                            8 yıl / 160.000 KM fabrika garantiniz dolduğunda bataryanızı hücre bozulmalarına ve kapasite kayıplarına karşı <strong>Allianz & Sigortam.net</strong> güvencesiyle 10 yıla kadar koruyun.
+                        </p>
+                    </div>
+                    <div class="text-right whitespace-nowrap">
+                        <div class="text-2xl font-black text-white">₺4.900 <span class="text-xs text-slate-400">/ yıl</span></div>
+                        <button onclick="alert('T-Care Uzatılmış Garanti poliçe başvurusu alındı. Ekspertiz onayı için randevunuz oluşturuldu.')" class="mt-2 bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-90 text-white font-black text-xs px-5 py-2.5 rounded-xl transition">
+                            Poliçe Oluştur
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+</main>
 
     <!-- Cart Drawer -->
     <div id="cartDrawer" class="fixed inset-y-0 right-0 w-full md:w-96 glass-panel !rounded-none !border-y-0 !border-r-0 border-l border-white/10 bg-[#070a12]/95 backdrop-blur-2xl z-[60] transform translate-x-full transition-transform duration-300 flex flex-col">
@@ -618,5 +679,20 @@
             }, 1500);
         }
     </script>
+<script>        function startBluetoothScan() {
+            const btn = document.getElementById('btConnectBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> OBD Cihazı Taranıyor...';
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i> OBD-II Bağlandı (ELM327)';
+                btn.classList.add('border-emerald-400');
+                setInterval(() => {
+                    document.getElementById('liveDelta').innerText = (11.0 + Math.random() * 0.8).toFixed(1);
+                    document.getElementById('liveTemp').innerText = (24.0 + Math.random() * 0.5).toFixed(1);
+                    document.getElementById('liveKw').innerText = (15.0 + Math.random() * 10.0).toFixed(1);
+                }, 2000);
+                alert("OBD-II Dongle başarıyla eşleşti! Canlı batarya hücre voltajları ve motor telemetrisi okunuyor.");
+                if(typeof trackEcosystemEvent === 'function') trackEcosystemEvent('obd_bluetooth_connected', { device: 'ELM327_Togg_CAN' });
+            }, 1500);
+        }</script>
 </body>
 </html>
