@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Togg T10X & T10F Arıza Kodları ve Acil Çözüm Rehberi 2026 | ServiceTogg</title>
+    <meta name="description" content="Togg T10X sık karşılaşılan sorunlar ve acil çözümler: Kilitli şarj soketi manuel açma, TruOS ekran donması hard reset, 12V akü uyarısı, rejeneratif fren ve OTA güncelleme adımları.">
+    <meta name="keywords" content="togg şarj soketi kilitlendi, togg ekran dondu reset, togg 12v akü uyarısı, togg ota güncelleme hatası, togg arıza kodları, togg acil durum">
+    <link rel="canonical" href="https://servicetogg.com/ariza-rehberi.html">
+
+    <!-- OpenGraph & Twitter Cards -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://servicetogg.com/ariza-rehberi.html">
+    <meta property="og:title" content="Togg T10X & T10F Arıza Kodları ve Çözüm Rehberi">
+    <meta property="og:description" content="Togg T10X ekran donması, kilitli şarj kablosu acil tahliyesi, 12V akü ve yazılım sorunları için adım adım pratik çözümler.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Schema.org HowTo JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "Togg T10X TruOS Ekran Donması Nasıl Düzeltilir?",
+      "description": "Togg T10X multimedya ve kokpit ekranı donduğunda direksiyondan hard reset atma adımları.",
+      "step": [
+        { "@type": "HowToStep", "name": "Direksiyon Tuşlarına Basılı Tutun", "text": "Direksiyonun sağ ve solundaki kumanda tuşlarına aynı anda yaklaşık 15 saniye basılı tutun." },
+        { "@type": "HowToStep", "name": "Togg Logosunun Görünmesini Bekleyin", "text": "Ekranlar karardıktan sonra Togg logosu gelene kadar bekleyin." },
+        { "@type": "HowToStep", "name": "Yeniden Başlatma Tamamlandı", "text": "TruOS işletim sistemi yaklaşık 30 saniye içinde yeniden açılacaktır." }
+      ]
+    }
+    </script>
+
+    <!-- Tailwind & Custom Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#070a12',
+                        darker: '#03050a',
+                        crimson: '#e53935',
+                        brandRose: '#f43f5e',
+                        brandAmber: '#f59e0b',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #070a12; color: #f1f5f9; overflow-x: hidden; }
+        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1.5rem; }
+        .glass-card { background: rgba(18, 22, 36, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.3s ease; }
+        .glass-card:hover { border-color: rgba(245, 158, 11, 0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 25px rgba(245, 158, 11, 0.15); }
+        .nav-link { transition: color 0.3s; }
+        .nav-link:hover { color: #f59e0b; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #070a12; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(245, 158, 11, 0.5); }
+    </style>
+</head>
+<body class="bg-dark text-slate-100 min-h-screen flex flex-col selection:bg-amber-500 selection:text-slate-950">
+
+    <!-- Top Ecosystem Header Bar -->
+    <div class="bg-[#03050a] border-b border-white/5 py-1.5 px-4 text-[11px] font-bold text-slate-400">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-black bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mr-1 animate-ping"></span> ARIZA REHBERİ
+                </span>
+                <span class="hidden sm:inline text-slate-500">Togg Connected Mobility Ekosistemi</span>
+            </div>
+            <div class="flex items-center gap-5">
+                <a href="https://chargetogg.com" class="hover:text-white transition flex items-center gap-1"><i class="fa-solid fa-bolt"></i> ChargeTogg</a>
+                <a href="/" class="text-amber-400 flex items-center gap-1 font-extrabold"><i class="fa-solid fa-wrench"></i> ServiceTogg</a>
+                <a href="https://toggelectric.com" class="hover:text-white transition flex items-center gap-1"><i class="fa-solid fa-comments"></i> ToggElectric</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-panel !rounded-none !border-x-0 !border-t-0 border-b border-white/10 bg-[#070a12]/90 backdrop-blur-xl px-4 sm:px-6 h-20 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-500 via-rose-500 to-red-600 flex items-center justify-center text-white shadow-lg shadow-amber-500/30 group-hover:scale-105 transition">
+                    <i class="fa-solid fa-triangle-exclamation text-xl"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-tight text-white flex items-center gap-1">
+                        Service<span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-rose-500">Togg</span>
+                        <span class="text-[9px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-0.5 rounded ml-1">DESTEK</span>
+                    </span>
+                    <span class="text-[10px] font-semibold text-slate-400">ARIZA KODLARI & ACİL ÇÖZÜMLER</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-300">
+                <a href="/" class="nav-link">Ana Sayfa</a>
+                <a href="/bakim-takvimi.html" class="nav-link">Bakım Takvimi</a>
+                <a href="/aksesuar.html" class="nav-link">Aksesuarlar</a>
+                <a href="/ariza-rehberi.html" class="text-amber-400 font-bold border-b-2 border-amber-400 pb-1 flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Arıza Rehberi</a>
+                <a href="/#randevu-al" class="nav-link">Randevu Al</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <a href="/#randevu-al" class="bg-gradient-to-r from-amber-500 to-rose-500 hover:opacity-95 text-slate-950 font-black text-xs px-4 py-2.5 rounded-xl shadow-lg shadow-amber-500/25 flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-phone-volume"></i> Servis Çağır
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- HERO SECTION -->
+        <section class="relative py-16 px-4 sm:px-6 max-w-7xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-black uppercase tracking-wider mb-6">
+                <i class="fa-solid fa-wrench"></i> Sürücü Acil Yardım Kılavuzu
+            </div>
+            <h1 class="text-3xl sm:text-6xl font-black text-white tracking-tight max-w-4xl mx-auto leading-tight">
+                Togg T10X & T10F <br class="hidden sm:inline">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-rose-400 to-rose-500">Sık Karşılaşılan Durumlar ve Çözümler</span>
+            </h1>
+            <p class="text-slate-400 text-sm sm:text-lg mt-6 max-w-3xl mx-auto leading-relaxed">
+                Yolda veya şarj istasyonunda karşılaşabileceğiniz kilitli kablo, TruOS ekran donması, 12V akü ve güncelleme durumlarında servise gitmeden uygulayabileceğiniz pratik adımlar.
+            </p>
+        </section>
+
+        <!-- TROUBLESHOOTING GRID SECTION -->
+        <section class="py-8 px-4 sm:px-6 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Card 1: Kilitli Soket -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border-l-4 border-l-amber-400">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-black uppercase px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">Acil Kurtarma</span>
+                            <i class="fa-solid fa-plug-circle-exclamation text-amber-400 text-xl"></i>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-black text-white">Şarj Soketi Kilitlendiğinde Ne Yapılır?</h2>
+                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">
+                            Şarj işlemi tamamlandığı halde kablo araç soketinden ayrılmıyorsa elektromanyetik kilit devreye girmiş olabilir.
+                        </p>
+
+                        <div class="mt-6 space-y-3">
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 font-mono font-bold flex items-center justify-center shrink-0">1</span>
+                                <p class="text-slate-300">Öncelikle şarj istasyonunun ekranından veya mobil uygulamasından <strong>"Şarjı Bitir"</strong> komutunu verin ve aracın kapı kilitlerini açın.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 font-mono font-bold flex items-center justify-center shrink-0">2</span>
+                                <p class="text-slate-300">Kilit açılmazsa <strong>Bagaj kapağını açın</strong>. Sol iç yan döşemedeki küçük kapağın arkasında yer alan <strong>sarı/turuncu renkli acil çekme telini</strong> yavaşça kendinize doğru çekin.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 font-mono font-bold flex items-center justify-center shrink-0">3</span>
+                                <p class="text-slate-300">Mekanik kilit serbest kalacaktır; kabloyu hafifçe ileri itip ardından dışarı doğru düz bir açıyla çekin.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: TruOS Ekran Donması -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border-l-4 border-l-cyan-400">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-black uppercase px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">Yazılım / Reset</span>
+                            <i class="fa-solid fa-arrows-rotate text-cyan-400 text-xl"></i>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-black text-white">TruOS Ekran Donması Çözümü (Hard Reset)</h2>
+                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">
+                            29 inç dijital kokpit veya multimedya ekranı yanıt vermediğinde sistemi araç hareket halindeyken bile güvenle yeniden başlatabilirsiniz.
+                        </p>
+
+                        <div class="mt-6 space-y-3">
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 font-mono font-bold flex items-center justify-center shrink-0">1</span>
+                                <p class="text-slate-300">Direksiyon üzerindeki <strong>Sol Dokunmatik Kaydırma Tuşu</strong> ile <strong>Sağ Menü Tuşuna</strong> aynı anda basılı tutun.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 font-mono font-bold flex items-center justify-center shrink-0">2</span>
+                                <p class="text-slate-300">Tuşları yaklaşık <strong>15 saniye</strong> basılı tutun. Ekranlar kararana kadar bırakmayın.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 font-mono font-bold flex items-center justify-center shrink-0">3</span>
+                                <p class="text-slate-300">Ekranlarda Togg amblemi göründüğünde tuşları bırakın. Sistem ~25 saniyede donma giderilmiş olarak açılır (Araç sürüş güvenliği etkilenmez).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: 12V Akü Uyarısı -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border-l-4 border-l-rose-500">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-black uppercase px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">Donanım / Akü</span>
+                            <i class="fa-solid fa-car-battery text-rose-400 text-xl"></i>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-black text-white">12V Yardımcı Akü Uyarısı</h2>
+                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">
+                            Elektrikli araçlarda ana yüksek gerilim bataryasını ve kontrol modüllerini uyandırmak için 12V küçük akü kullanılır.
+                        </p>
+
+                        <div class="mt-6 space-y-3">
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 font-mono font-bold flex items-center justify-center shrink-0">1</span>
+                                <p class="text-slate-300">Araç uzun süre park halinde kaldıysa ve kapılar kumandadan açılmıyorsa mekanik acil durum anahtarıyla sol kapıyı açın.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 font-mono font-bold flex items-center justify-center shrink-0">2</span>
+                                <p class="text-slate-300">Ön kaputu açarak 12V takviye kutup başlarına 12V şarj cihazı veya takviye kablosu bağlayın (Ana HV bataryaya asla müdahale etmeyin).</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 font-mono font-bold flex items-center justify-center shrink-0">3</span>
+                                <p class="text-slate-300">Sistem uyandığında aracı <strong>"READY"</strong> konumuna getirin; ana HV batarya 12V aküyü otomatik olarak şarj edecektir.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Rejeneratif Frenleme -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border-l-4 border-l-emerald-400">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-black uppercase px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Menzil & Fren</span>
+                            <i class="fa-solid fa-bolt-lightning text-emerald-400 text-xl"></i>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-black text-white">Rejeneratif Fren Sınırlaması / Uyarısı</h2>
+                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">
+                            Ayağınızı gazdan çektiğinizde araç yavaşlamıyor veya göstergede rejen simgesi gri görünüyorsa:
+                        </p>
+
+                        <div class="mt-6 space-y-3">
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center shrink-0">1</span>
+                                <p class="text-slate-300"><strong>Batarya %100 Doluysa:</strong> Bataryada geri kazanılan enerjiyi depolayacak alan olmadığından rejen geçici olarak devre dışı kalır. %95 altına indiğinde normale döner.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center shrink-0">2</span>
+                                <p class="text-slate-300"><strong>Soğuk Kış Koşullarında:</strong> Batarya hücre sıcaklığı 0°C altındayken hücre sağlığını korumak için rejen akımı sınırlandırılır. Batarya ısındıkça tam güce ulaşır.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center shrink-0">3</span>
+                                <p class="text-slate-300">Direksiyon arkasındaki kulakçıklardan (Paddle Shifter) Seviye 1, 2 veya 3 rejen modunu manuel olarak değiştirebilirsiniz.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5: OTA Güncelleme Hatası -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border-l-4 border-l-purple-400">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-black uppercase px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">OTA Yazılım</span>
+                            <i class="fa-solid fa-cloud-arrow-down text-purple-400 text-xl"></i>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-black text-white">OTA Güncelleme Başarısız Hatası</h2>
+                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">
+                            TruOS yazılım güncellemesi indirildiği halde yükleme başlamıyorsa:
+                        </p>
+
+                        <div class="mt-6 space-y-3">
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 font-mono font-bold flex items-center justify-center shrink-0">•</span>
+                                <p class="text-slate-300"><strong>Batarya Seviyesi:</strong> Güvenlik sebebiyle batarya şarjı <strong>en az %50</strong> olmalıdır.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 font-mono font-bold flex items-center justify-center shrink-0">•</span>
+                                <p class="text-slate-300"><strong>Park Konumu:</strong> Vites <strong>P</strong> konumunda, el freni çekili ve şarj kablosu takılı olmamalıdır.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 font-mono font-bold flex items-center justify-center shrink-0">•</span>
+                                <p class="text-slate-300">Aracı kilitleyip yaklaşık 20 dakika uykuda bırakın; güncelleme arka planda tamamlanacaktır.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6: TPMS Lastik Basıncı -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border-l-4 border-l-blue-400">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-black uppercase px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">Lastik / Güvenlik</span>
+                            <i class="fa-solid fa-gauge-simple-high text-blue-400 text-xl"></i>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-black text-white">Lastik Basınç Sensörü (TPMS) Sıfırlama</h2>
+                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">
+                            Mevsim geçişlerinde hava soğuduğunda lastik basınç uyarı ışığı yanabilir.
+                        </p>
+
+                        <div class="mt-6 space-y-3">
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 font-mono font-bold flex items-center justify-center shrink-0">•</span>
+                                <p class="text-slate-300">4 lastiğin havasını da soğukken <strong>38 - 40 PSI (2.6 - 2.7 Bar)</strong> değerine tamamlayın.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 font-mono font-bold flex items-center justify-center shrink-0">•</span>
+                                <p class="text-slate-300">TruOS ekranında <strong>Araç Ayarları ➔ Güvenlik ➔ Lastik Basınç Kalibrasyonu</strong> seçeneğine tıklayıp <strong>"Sıfırla"</strong> butonuna basın.</p>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 flex items-start gap-3 text-xs">
+                                <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 font-mono font-bold flex items-center justify-center shrink-0">•</span>
+                                <p class="text-slate-300">Aracı 3-5 km sürdüğünüzde sensörler yeni basınç değerlerini kaydedecek ve ikaz sönecektir.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Emergency Service CTA -->
+            <div class="mt-12 p-8 rounded-3xl bg-gradient-to-r from-amber-950/40 via-darker to-rose-950/40 border border-amber-500/30 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+                <div>
+                    <h3 class="text-xl font-black text-white">Sorun Devam Ediyor mu?</h3>
+                    <p class="text-xs text-slate-400 mt-1">Yetkili servisimizden uzaktan destek veya yerinde mobil servis randevusu talep edin.</p>
+                </div>
+                <a href="/#randevu-al" class="shrink-0 bg-gradient-to-r from-amber-500 to-rose-500 hover:opacity-95 text-slate-950 font-black text-sm px-8 py-4 rounded-2xl shadow-lg shadow-amber-500/25 transition">
+                    Yetkili Servis Randevusu Al
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#03050a] border-t border-white/5 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <div class="flex items-center gap-2 text-white font-black">
+                <i class="fa-solid fa-wrench text-amber-500"></i> Service<span class="text-amber-500">Togg</span>
+            </div>
+            <div>
+                © 2026 ServiceTogg. Tüm hakları saklıdır. Togg Connected Mobility Ekosistemi.
+            </div>
+            <div class="flex gap-4">
+                <a href="/" class="hover:text-white transition">Ana Sayfa</a>
+                <a href="/bakim-takvimi.html" class="hover:text-white transition">Bakım Takvimi</a>
+                <a href="/aksesuar.html" class="hover:text-white transition">Aksesuarlar</a>
+                <a href="/ariza-rehberi.html" class="hover:text-white transition">Arıza Rehberi</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
