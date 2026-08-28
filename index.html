@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ServiceTogg | Togg Yetkili, Mobil Servis & Dijital Bakım Ekosistemi</title>
-    <meta name="description" content="Togg T10X & T10F telemetri arıza teşhisi (DTC), Gezer Mobil Servis rezervasyonu, T-Care periyodik bakım ve orijinal aksesuar merkezi.">
+    <title>ServiceTogg v2.0 | Togg Yetkili Servis, Bakım ve Aksesuar</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -25,340 +24,465 @@
         }
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { font-family: 'Inter', sans-serif; }
         .glass { background: rgba(19, 22, 32, 0.85); backdrop-filter: blur(16px); }
-        .tab-active { border-color: #e53935; color: #e53935; }
+        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .drawer-closed { transform: translateX(100%); }
+        .drawer-open { transform: translateX(0); }
+        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="bg-lightBg dark:bg-darkBg text-slate-800 dark:text-slate-100 transition-colors duration-300 antialiased min-h-screen flex flex-col">
+<body class="bg-lightBg dark:bg-darkBg text-slate-800 dark:text-slate-100 transition-colors duration-300 antialiased min-h-screen flex flex-col overflow-x-hidden">
 
-    <!-- Top Announcement Bar -->
-    <div class="bg-gradient-to-r from-red-700 via-brand to-orange-600 text-white text-xs font-bold py-2 text-center tracking-wide px-4 flex items-center justify-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-        <span>Togg Gezer Mobil Servis Filosu 81 İlde Hizmete Başladı! Yerinde Lastik, Filtre ve Yazılım Güncellemesi.</span>
+    <!-- Cross-Site Navigation -->
+    <div class="bg-slate-900 text-slate-300 text-[10px] sm:text-xs font-bold py-2 border-b border-slate-800 flex justify-center gap-4 sm:gap-8">
+        <a href="https://chargetogg.com" class="hover:text-white transition flex items-center gap-1"><i class="fa-solid fa-charging-station text-blue-500"></i> ChargeTogg</a>
+        <a href="#" class="text-white flex items-center gap-1 border-b border-brand pb-0.5"><i class="fa-solid fa-screwdriver-wrench text-brand"></i> ServiceTogg</a>
+        <a href="https://toggelectric.com" class="hover:text-white transition flex items-center gap-1"><i class="fa-solid fa-bolt text-yellow-500"></i> ToggElectric</a>
     </div>
 
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 glass border-b border-slate-200 dark:border-darkBorder">
+    <!-- Main Navigation -->
+    <nav class="sticky top-0 z-40 glass border-b border-slate-200 dark:border-darkBorder">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <a href="#" class="flex items-center gap-2.5 text-2xl font-black tracking-tight text-slate-900 dark:text-white">
-                    <span class="w-10 h-10 rounded-xl bg-brand flex items-center justify-center text-white shadow-lg shadow-brand/30">
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand to-orange-500 flex items-center justify-center text-white shadow-lg shadow-brand/30">
                         <i class="fa-solid fa-screwdriver-wrench text-lg"></i>
                     </span>
-                    <span>Service<span class="text-brand">Togg</span></span>
+                    <span>Service<span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-orange-500">Togg</span></span>
                 </a>
-                <span class="hidden lg:inline-block text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-brand/10 text-brand border border-brand/20 ml-2">50-Agent Mega Swarm</span>
             </div>
 
-            <div class="hidden md:flex items-center space-x-7 font-semibold text-sm">
-                <a href="#servis-sihirbazi" class="hover:text-brand transition flex items-center gap-1.5"><i class="fa-solid fa-laptop-code text-brand text-xs"></i> Arıza & Servis Sihirbazı</a>
-                <a href="#gezer-servis" class="hover:text-brand transition">Gezer Servis</a>
-                <a href="#bakim-hesapla" class="hover:text-brand transition">T-Care Bakım</a>
-                <a href="#magaza" class="hover:text-brand transition">Aksesuar & Parça</a>
-                <a href="#b2b" class="hover:text-brand transition">B2B Filo</a>
+            <div class="hidden lg:flex items-center space-x-7 font-semibold text-sm">
+                <a href="#sihirbaz" class="hover:text-brand transition">Servis Sihirbazı</a>
+                <a href="#t-care" class="hover:text-brand transition">T-Care Bakım</a>
+                <a href="#garanti" class="hover:text-brand transition">Garanti Sorgulama</a>
+                <a href="#gezer" class="hover:text-brand transition">Gezer Mobil Servis</a>
+                <a href="#magaza" class="hover:text-brand transition">Mağaza</a>
             </div>
 
             <div class="flex items-center gap-3">
-                <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl border border-slate-300 dark:border-darkBorder flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-brand transition">
-                    <i id="themeIcon" class="fa-solid fa-sun"></i>
+                <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl border border-slate-300 dark:border-darkBorder flex items-center justify-center hover:text-brand transition">
+                    <i id="themeIcon" class="fa-solid fa-moon"></i>
                 </button>
-                <button onclick="openAdminModal()" class="w-10 h-10 rounded-xl bg-slate-200 dark:bg-darkCard border border-slate-300 dark:border-darkBorder flex items-center justify-center text-slate-700 dark:text-slate-300 hover:border-brand transition" title="Yönetici Dashboard">
-                    <i class="fa-solid fa-gauge-high"></i>
-                </button>
-                <button onclick="openCart()" class="relative bg-brand hover:bg-brandDark text-white font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg shadow-brand/25">
+                <button onclick="toggleCart()" class="relative bg-gradient-to-r from-brand to-brandDark text-white font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg shadow-brand/30 hover:shadow-brand/50 hover:scale-105 transform duration-200">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    <span class="hidden sm:inline text-sm">Sepet</span>
-                    <span id="cartBadge" class="bg-white text-brand text-xs font-black px-2 py-0.5 rounded-full">0</span>
+                    <span id="cartBadge" class="absolute -top-2 -right-2 bg-white text-brand text-xs font-black w-6 h-6 flex items-center justify-center rounded-full shadow-md">0</span>
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="relative overflow-hidden pt-12 pb-16 lg:pt-20 lg:pb-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                <div class="lg:col-span-7 space-y-6">
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-200 dark:bg-darkCard border border-slate-300 dark:border-darkBorder text-xs font-bold text-brand">
-                        <i class="fa-solid fa-shield-halved"></i> Togg Fabrika Standartlarında 2 Yıl Garantili İşçilik & Parça
-                    </div>
-                    <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-tight text-slate-900 dark:text-white">
-                        Akıllı Servis, Telemetri ve <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand via-orange-500 to-amber-400">Mobil Bakım</span> Merkezi.
-                    </h1>
-                    <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-xl">
-                        Şasi numaranız (VIN) ve OBD-II arıza kodlarınızla anında randevu oluşturun. Dilerseniz Gezer Mobil Servis ekibimiz kapınıza gelsin.
-                    </p>
-                    <div class="flex flex-wrap gap-4 pt-2">
-                        <a href="#servis-sihirbazi" class="bg-brand hover:bg-brandDark text-white font-bold px-8 py-4 rounded-xl transition shadow-xl shadow-brand/30 flex items-center gap-3">
-                            <i class="fa-solid fa-calendar-check"></i> Anında Servis Randevusu
-                        </a>
-                        <a href="#gezer-servis" class="bg-slate-200 dark:bg-darkCard hover:bg-slate-300 dark:hover:bg-slate-800 text-slate-800 dark:text-white font-bold px-8 py-4 rounded-xl border border-slate-300 dark:border-darkBorder transition flex items-center gap-3">
-                            <i class="fa-solid fa-truck-fast text-brand"></i> Gezer Servis Çağır
-                        </a>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-5">
-                    <div class="p-6 rounded-3xl bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder shadow-2xl space-y-4">
-                        <div class="flex justify-between items-center pb-3 border-b border-slate-200 dark:border-darkBorder">
-                            <span class="text-xs font-extrabold uppercase text-brand tracking-wider"><i class="fa-solid fa-circle-nodes mr-1.5"></i> Canlı Servis İstatistikleri</span>
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-500/10 text-green-500 border border-green-500/20">81 İl Aktif</span>
-                        </div>
-                        <div class="grid grid-cols-2 gap-3 text-center">
-                            <div class="p-3 rounded-2xl bg-slate-100 dark:bg-darkBg border border-slate-200 dark:border-darkBorder">
-                                <span class="text-[10px] text-slate-500 font-bold uppercase block">Gezer Servis Aracı</span>
-                                <span class="text-xl font-black text-slate-900 dark:text-white">48 Mobil Ekip</span>
-                            </div>
-                            <div class="p-3 rounded-2xl bg-slate-100 dark:bg-darkBg border border-slate-200 dark:border-darkBorder">
-                                <span class="text-[10px] text-slate-500 font-bold uppercase block">Ort. Müdahale</span>
-                                <span class="text-xl font-black text-brand">42 Dakika</span>
-                            </div>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-darkBg/60 border border-slate-200 dark:border-darkBorder text-xs space-y-2">
-                            <div class="flex justify-between text-slate-500">
-                                <span>Son Randevu:</span>
-                                <span class="font-bold text-slate-900 dark:text-white">İstanbul Maslak T-Care</span>
-                            </div>
-                            <div class="flex justify-between text-slate-500">
-                                <span>İşlem Türü:</span>
-                                <span class="font-bold text-brand">40.000 KM T-Care Bakım</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Hero -->
+    <header class="py-16 sm:py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-brand/5 to-transparent dark:from-brand/10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-brand/10 text-brand text-xs font-bold mb-4 border border-brand/20">ServiceTogg v2.0 Yayında</span>
+            <h1 class="text-4xl sm:text-6xl font-black mb-6 tracking-tight">Akıllı Bakım, <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-orange-500">Sınırsız Güven.</span></h1>
+            <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-10 text-lg">Togg T10X ve T10F araçlarınız için orijinal yedek parça, T-Care periyodik bakım paketleri ve Gezer Mobil Servis ağımızla yanınızdayız.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#sihirbaz" class="bg-brand hover:bg-brandDark text-white px-8 py-4 rounded-xl font-bold transition shadow-xl shadow-brand/20"><i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Servis Randevusu Al</a>
+                <a href="#magaza" class="bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder text-slate-800 dark:text-white px-8 py-4 rounded-xl font-bold hover:border-brand transition"><i class="fa-solid fa-shop mr-2"></i>Mağazayı Keşfet</a>
             </div>
         </div>
     </header>
 
-    <!-- STEP-BY-STEP SERVICE & OBD-II DTC WIZARD -->
-    <section id="servis-sihirbazi" class="py-16 bg-slate-100 dark:bg-darkCard/40 border-y border-slate-200 dark:border-darkBorder">
+    <!-- Service Wizard -->
+    <section id="sihirbaz" class="py-16 bg-slate-50 dark:bg-darkCard/30 border-y border-slate-200 dark:border-darkBorder">
         <div class="max-w-4xl mx-auto px-4">
-            <div class="text-center mb-10">
-                <span class="text-xs font-extrabold text-brand uppercase tracking-widest">Akıllı Telemetri Sistemi</span>
-                <h2 class="text-3xl font-black text-slate-900 dark:text-white">Adım Adım Togg Servis Sihirbazı</h2>
-                <p class="text-xs sm:text-sm text-slate-500 mt-2">Aracınızın şasi veya modelini seçin, arıza kodlarını ekleyin ve tahmini maliyeti anında görün.</p>
-            </div>
-
-            <div class="bg-white dark:bg-darkCard p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-darkBorder shadow-xl">
-                <form onsubmit="handleWizardSubmit(event)" class="space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">1. Araç Modeli</label>
-                            <select id="wizModel" class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs font-bold outline-none focus:border-brand">
-                                <option value="t10x-v2">Togg T10X V2 Uzun Menzil (88.5 kWh)</option>
-                                <option value="t10x-v1">Togg T10X V1 Standart Menzil (52.4 kWh)</option>
-                                <option value="t10f">Togg T10F Fastback</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">2. Şasi No (Opsiyonel VIN)</label>
-                            <input type="text" id="wizVin" placeholder="NM4T10X..." maxlength="17" class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs outline-none focus:border-brand uppercase">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">3. Güncel Kilometre</label>
-                            <input type="number" id="wizKm" placeholder="Örn: 42500" required class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs outline-none focus:border-brand">
-                        </div>
+            <h2 class="text-3xl font-black text-center mb-2">Arıza & Servis Sihirbazı</h2>
+            <p class="text-center text-slate-500 mb-10 text-sm">Aracınızı seçin, şikayetinizi veya arıza kodunu belirtin, en yakın servisi ve tahmini fiyatı görün.</p>
+            
+            <div class="bg-white dark:bg-darkCard p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-darkBorder shadow-xl glass-card">
+                <div class="mb-8">
+                    <div class="flex justify-between mb-2 text-xs font-bold text-slate-500">
+                        <span id="step1-indicator" class="text-brand">1. Araç Bilgisi</span>
+                        <span id="step2-indicator">2. Arıza/DTC</span>
+                        <span id="step3-indicator">3. Çözüm & Randevu</span>
                     </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Hizmet Türü</label>
-                            <select id="wizType" onchange="calcWizPrice()" class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs font-bold outline-none focus:border-brand">
-                                <option value="periodic-40">40.000 KM Periyodik T-Care Bakımı</option>
-                                <option value="periodic-80">80.000 KM Kapsamlı T-Care Bakımı</option>
-                                <option value="mobile-service">Gezer Mobil Servis (Yerinde Bakım)</option>
-                                <option value="diagnostic">OBD-II Arıza & Yazılım Kalibrasyonu</option>
-                                <option value="brake-tire">Fren Sıvısı & Balata Değişimi</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">OBD-II / DTC Arıza Kodu (Varsa)</label>
-                            <select id="wizDtc" class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs outline-none focus:border-brand">
-                                <option value="NONE">Arıza Kodu Yok (Standart Bakım)</option>
-                                <option value="P0A1F">P0A1F - Batarya Yönetim Modülü (BMS) Kalibrasyonu</option>
-                                <option value="U0100">U0100 - TruOS Ana Ekran / ECU İletişim Uyarısı</option>
-                                <option value="C1201">C1201 - Rejeneratif Frenleme Tork Sensörü</option>
-                                <option value="B1044">B1044 - Isı Pompası ve Kabin HVAC Sensörü</option>
-                            </select>
-                        </div>
+                    <div class="h-2 bg-slate-100 dark:bg-darkBg rounded-full overflow-hidden">
+                        <div id="wizard-progress" class="h-full bg-brand w-1/3 transition-all duration-500"></div>
                     </div>
-
-                    <div class="p-5 rounded-2xl bg-slate-100 dark:bg-darkBg border border-slate-200 dark:border-darkBorder flex flex-col sm:flex-row justify-between items-center gap-4">
-                        <div>
-                            <span class="text-xs font-bold text-slate-500 uppercase block">Hesaplanan Tahmini Tutar</span>
-                            <span id="wizEstimatedPrice" class="text-2xl font-black text-brand">₺4.850</span>
-                            <span class="text-[10px] text-slate-400 block">KDV, Orijinal Parçalar ve İşçilik Dahildir.</span>
-                        </div>
-                        <button type="submit" class="w-full sm:w-auto bg-brand hover:bg-brandDark text-white font-black px-8 py-3.5 rounded-xl text-xs transition shadow-lg shadow-brand/30">
-                            Randevuyu Onayla & Takvime Ekle
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- GEZER MOBİL SERVİS SİMÜLATÖRÜ -->
-    <section id="gezer-servis" class="py-16">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div class="lg:col-span-6 space-y-4">
-                    <span class="text-xs font-extrabold text-brand uppercase tracking-widest">Kapıda Servis Konforu</span>
-                    <h2 class="text-3xl font-black text-slate-900 dark:text-white">Gezer Mobil Servis Aracı Çağırın</h2>
-                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-                        Evde, ofiste veya seyahatteyken Togg tam donanımlı Gezer Servis minibüsümüz adresinize gelsin. Yerinde silecek, kabin filtresi, 12V akü testi ve TruOS yazılım güncellemesi yapılsın.
-                    </p>
-                    <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-300 font-semibold">
-                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Adrese Teslim Mobil Teknisyen</li>
-                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Canlı GPS Üzerinden Teknisyen Takibi</li>
-                        <li><i class="fa-solid fa-check text-green-500 mr-2"></i> Temassız Mobil POS ile Ödeme</li>
-                    </ul>
                 </div>
 
-                <div class="lg:col-span-6">
-                    <div class="p-6 rounded-3xl bg-slate-900 border border-slate-800 text-white space-y-4 shadow-2xl relative overflow-hidden">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="font-bold flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400 animate-ping"></span> Canlı Teknisyen Takip Ekranı</span>
-                            <span class="text-slate-400">34 TGG 048</span>
+                <div id="wiz-step-1" class="animate-fade-in space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Araç Modeli</label>
+                        <select id="wizModel" class="w-full p-4 rounded-xl bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder outline-none focus:border-brand">
+                            <option value="T10X V2 Long Range 88.5kWh">T10X V2 Long Range (88.5 kWh)</option>
+                            <option value="T10X V1 Standard 52.4kWh">T10X V1 Standard (52.4 kWh)</option>
+                            <option value="T10F Fastback">T10F Fastback</option>
+                            <option value="T10X V3 (2025)">T10X V3 (2025 Yeni Nesil)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Güncel Kilometre</label>
+                        <input type="number" id="wizKm" placeholder="Örn: 15000" class="w-full p-4 rounded-xl bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder outline-none focus:border-brand">
+                    </div>
+                    <button onclick="wizNext(2)" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl mt-4 hover:bg-brand dark:hover:bg-brand transition">İleri <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                </div>
+
+                <div id="wiz-step-2" class="hidden animate-fade-in space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold mb-2">DTC Arıza Kodu (Varsa)</label>
+                        <select id="wizDtc" class="w-full p-4 rounded-xl bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder outline-none focus:border-brand">
+                            <option value="NONE" data-sev="info">Arıza Kodu Yok (Sadece Bakım / Kontrol)</option>
+                            <option value="P0A80" data-sev="critical">P0A80 - Batarya Paketi Hücre Dengesizliği (Kritik)</option>
+                            <option value="U0100" data-sev="warning">U0100 - TruOS Ana Ekran / ECU İletişimi Koptu (Uyarı)</option>
+                            <option value="C1201" data-sev="info">C1201 - Rejeneratif Frenleme Tork Sensörü Hatası (Bilgi)</option>
+                            <option value="B1044" data-sev="warning">B1044 - Isı Pompası ve Kabin HVAC Sensörü (Uyarı)</option>
+                            <option value="P0D15" data-sev="critical">P0D15 - AC Şarj Portu Sıcaklık Uyarısı (Kritik)</option>
+                            <option value="C0040" data-sev="info">C0040 - Sağ Ön Tekerlek Hız Sensörü (Bilgi)</option>
+                            <option value="U110B" data-sev="warning">U110B - Anahtar / İmmobilizer Eşleşme Hatası (Uyarı)</option>
+                            <option value="B121A" data-sev="info">B121A - Sol Arka Kapı Kilit Motoru (Bilgi)</option>
+                            <option value="P1A10" data-sev="critical">P1A10 - Elektrik Motoru İnvertör Aşırı Isınma (Kritik)</option>
+                            <option value="C056D" data-sev="warning">C056D - Direksiyon Açı Sensörü Kalibrasyonu (Uyarı)</option>
+                            <option value="U0415" data-sev="info">U0415 - ABS Modülünden Geçersiz Veri (Bilgi)</option>
+                            <option value="P1E00" data-sev="warning">P1E00 - Hybrid/EV Powertrain Control Modülü (Uyarı)</option>
+                            <option value="B2500" data-sev="info">B2500 - Gündüz Farları Devresi (Bilgi)</option>
+                            <option value="P0C33" data-sev="critical">P0C33 - DC-DC Konvertör Çıkış Hatası (Kritik)</option>
+                            <option value="U1208" data-sev="info">U1208 - Otonom Sürüş Kamera Görüş Engeli (Bilgi)</option>
+                        </select>
+                    </div>
+                    <div class="flex gap-4">
+                        <button onclick="wizNext(1)" class="w-1/3 bg-slate-200 dark:bg-darkBg text-slate-800 dark:text-white font-bold py-4 rounded-xl hover:bg-slate-300 transition">Geri</button>
+                        <button onclick="wizCalculate()" class="w-2/3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-brand dark:hover:bg-brand transition">Sonucu Gör <i class="fa-solid fa-check ml-2"></i></button>
+                    </div>
+                </div>
+
+                <div id="wiz-step-3" class="hidden animate-fade-in space-y-6">
+                    <div class="p-4 rounded-xl border flex flex-col sm:flex-row gap-4 items-center" id="wizResultBox">
+                        <div class="w-16 h-16 rounded-full flex items-center justify-center text-2xl font-black text-white shrink-0" id="wizIconBg">
+                            <i class="fa-solid fa-wrench" id="wizIcon"></i>
                         </div>
-                        <div class="h-44 rounded-2xl bg-slate-950 flex flex-col items-center justify-center relative p-4 border border-slate-800 text-center">
-                            <i class="fa-solid fa-truck-pickup text-4xl text-brand mb-2 animate-bounce"></i>
-                            <h4 class="font-bold text-sm text-white">Teknisyen Yolda: Ahmet K. (Mobil Ekip #4)</h4>
-                            <p class="text-xs text-slate-400 mt-1">Tahmini Varış: <span class="text-green-400 font-bold">18 Dakika</span> (Maslak - Levent Güzergahı)</p>
+                        <div class="flex-1 text-center sm:text-left">
+                            <h4 class="font-bold text-lg" id="wizResTitle">Teşhis Sonucu</h4>
+                            <p class="text-sm text-slate-500" id="wizResDesc">Durum açıklaması...</p>
                         </div>
-                        <button onclick="alert('Mobil Teknisyen Talep Formu Başarıyla Oluşturuldu! GPS Konumunuz Alındı.')" class="w-full bg-brand hover:bg-brandDark text-white font-bold py-3 rounded-xl text-xs transition">
-                            Bulunduğum Konuma Gezer Servis Çağır
-                        </button>
+                        <div class="text-center sm:text-right">
+                            <span class="block text-xs font-bold text-slate-500 uppercase">Tahmini Süre</span>
+                            <span class="font-black text-xl text-brand" id="wizResTime">--</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span class="block text-sm font-bold mb-2">Önerilen En Yakın Servis</span>
+                        <div class="p-4 bg-slate-50 dark:bg-darkBg rounded-xl border border-slate-200 dark:border-darkBorder flex justify-between items-center">
+                            <div>
+                                <h5 class="font-bold text-brand" id="wizServiceCenter">Togg Deneyim Merkezi - Zorlu Center</h5>
+                                <p class="text-xs text-slate-500"><i class="fa-solid fa-location-dot mr-1"></i> İstanbul / Beşiktaş (Tahmini 5 km)</p>
+                            </div>
+                            <span class="text-lg font-black" id="wizPrice">Ücretsiz</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button onclick="wizNext(2)" class="w-1/3 bg-slate-200 dark:bg-darkBg text-slate-800 dark:text-white font-bold py-4 rounded-xl hover:bg-slate-300 transition">Geri</button>
+                        <button onclick="alert('Randevu talebiniz merkeze iletildi!')" class="w-2/3 bg-brand text-white font-bold py-4 rounded-xl hover:bg-brandDark transition shadow-lg shadow-brand/30">Hemen Randevu Al</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- STORE & ACCESSORY SECTION -->
-    <section id="magaza" class="py-16 bg-slate-100 dark:bg-darkCard/50 border-t border-slate-200 dark:border-darkBorder">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+    <!-- T-Care Comparison Table -->
+    <section id="t-care" class="py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-black text-center mb-2">T-Care Bakım Paketleri</h2>
+            <p class="text-center text-slate-500 mb-10 text-sm">Elektrikli aracınızın uzun ömürlü olması için periyodik bakımlarını aksatmayın.</p>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-[800px] text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-100 dark:bg-darkCard/50">
+                            <th class="p-4 rounded-tl-2xl border-b border-slate-200 dark:border-darkBorder font-bold text-sm">İçerik</th>
+                            <th class="p-4 border-b border-slate-200 dark:border-darkBorder font-bold text-center text-sm">20K km<br><span class="text-brand text-lg">₺1.200</span></th>
+                            <th class="p-4 border-b border-slate-200 dark:border-darkBorder font-bold text-center text-sm">40K km<br><span class="text-brand text-lg">₺4.850</span></th>
+                            <th class="p-4 border-b border-slate-200 dark:border-darkBorder font-bold text-center text-sm bg-brand/5 text-brand">60K km<br><span class="text-2xl">₺6.900</span></th>
+                            <th class="p-4 border-b border-slate-200 dark:border-darkBorder font-bold text-center text-sm">80K km<br><span class="text-brand text-lg">₺9.200</span></th>
+                            <th class="p-4 border-b border-slate-200 dark:border-darkBorder font-bold text-center text-sm">100K km<br><span class="text-brand text-lg">₺11.500</span></th>
+                            <th class="p-4 rounded-tr-2xl border-b border-slate-200 dark:border-darkBorder font-bold text-center text-sm">120K km<br><span class="text-brand text-lg">₺14.800</span></th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-slate-100 dark:divide-darkBorder">
+                        <tr class="hover:bg-slate-50 dark:hover:bg-darkCard/30 transition">
+                            <td class="p-4 font-semibold">Genel Kontrol & Hata Kodları (OBD)</td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-green-500 bg-brand/5"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 dark:hover:bg-darkCard/30 transition">
+                            <td class="p-4 font-semibold">Kabin Filtresi Değişimi</td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-green-500 bg-brand/5"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 dark:hover:bg-darkCard/30 transition">
+                            <td class="p-4 font-semibold">Silecek Lastikleri Değişimi</td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600">-</td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600 bg-brand/5">-</td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600">-</td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 dark:hover:bg-darkCard/30 transition">
+                            <td class="p-4 font-semibold">Fren Hidroliği Değişimi</td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600">-</td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600 bg-brand/5">-</td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600">-</td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 dark:hover:bg-darkCard/30 transition">
+                            <td class="p-4 font-semibold">Soğutma Sıvısı Değişimi (Batarya/Motor)</td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600">-</td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600">-</td>
+                            <td class="p-4 text-center text-green-500 bg-brand/5"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600">-</td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600">-</td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 dark:hover:bg-darkCard/30 transition">
+                            <td class="p-4 font-semibold">Redüktör Yağı Değişimi</td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600">-</td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600">-</td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600 bg-brand/5">-</td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600">-</td>
+                            <td class="p-4 text-center text-green-500"><i class="fa-solid fa-check"></i></td>
+                            <td class="p-4 text-center text-slate-300 dark:text-slate-600">-</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="p-4"></td>
+                            <td class="p-4 text-center"><button class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-lg text-xs font-bold hover:bg-brand transition w-full" onclick="alert('Randevu sayfasına yönlendiriliyorsunuz.')">Seç</button></td>
+                            <td class="p-4 text-center"><button class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-lg text-xs font-bold hover:bg-brand transition w-full" onclick="alert('Randevu sayfasına yönlendiriliyorsunuz.')">Seç</button></td>
+                            <td class="p-4 text-center bg-brand/5"><button class="bg-brand text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-brandDark transition w-full shadow-lg shadow-brand/30" onclick="alert('Randevu sayfasına yönlendiriliyorsunuz.')">Popüler</button></td>
+                            <td class="p-4 text-center"><button class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-lg text-xs font-bold hover:bg-brand transition w-full" onclick="alert('Randevu sayfasına yönlendiriliyorsunuz.')">Seç</button></td>
+                            <td class="p-4 text-center"><button class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-lg text-xs font-bold hover:bg-brand transition w-full" onclick="alert('Randevu sayfasına yönlendiriliyorsunuz.')">Seç</button></td>
+                            <td class="p-4 text-center"><button class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-lg text-xs font-bold hover:bg-brand transition w-full" onclick="alert('Randevu sayfasına yönlendiriliyorsunuz.')">Seç</button></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Warranty Status Checker -->
+    <section id="garanti" class="py-16 bg-slate-50 dark:bg-darkCard/30 border-y border-slate-200 dark:border-darkBorder">
+        <div class="max-w-3xl mx-auto px-4">
+            <h2 class="text-3xl font-black text-center mb-2">Garanti Sorgulama</h2>
+            <p class="text-center text-slate-500 mb-8 text-sm">Şasi numaranız (VIN) ile aracınızın güncel garanti durumunu anında öğrenin.</p>
+            
+            <div class="bg-white dark:bg-darkCard p-6 rounded-2xl border border-slate-200 dark:border-darkBorder shadow-lg">
+                <div class="flex gap-4 mb-6">
+                    <input type="text" id="vinInput" placeholder="VIN Giriniz (Örn: NM4T10X...)" class="flex-1 p-4 rounded-xl bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder outline-none focus:border-brand uppercase font-mono tracking-widest text-sm">
+                    <input type="number" id="vinKm" placeholder="KM Giriniz" class="w-32 p-4 rounded-xl bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder outline-none focus:border-brand text-sm">
+                    <button onclick="checkWarranty()" class="bg-brand text-white px-6 rounded-xl font-bold hover:bg-brandDark transition"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+                
+                <div id="warrantyResult" class="hidden space-y-6 animate-fade-in">
+                    <div class="border-t border-slate-200 dark:border-darkBorder pt-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-bold"><i class="fa-solid fa-car text-slate-400 mr-2"></i>Genel Araç Garantisi (5 Yıl / 150.000 KM)</span>
+                            <span class="text-xs font-bold bg-green-500/10 text-green-500 px-2 py-1 rounded">Aktif</span>
+                        </div>
+                        <div class="h-3 w-full bg-slate-100 dark:bg-darkBg rounded-full overflow-hidden">
+                            <div class="h-full bg-brand" id="genWarrantyBar" style="width: 0%"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-slate-500 mt-1 font-mono">
+                            <span>0 KM</span>
+                            <span id="genWarrantyText">-- / 150.000 KM Kalan</span>
+                            <span>150.000 KM</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-bold"><i class="fa-solid fa-battery-full text-brand mr-2"></i>Batarya Garantisi (8 Yıl / 160.000 KM)</span>
+                            <span class="text-xs font-bold bg-green-500/10 text-green-500 px-2 py-1 rounded">Aktif</span>
+                        </div>
+                        <div class="h-3 w-full bg-slate-100 dark:bg-darkBg rounded-full overflow-hidden">
+                            <div class="h-full bg-orange-500" id="batWarrantyBar" style="width: 0%"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-slate-500 mt-1 font-mono">
+                            <span>0 KM</span>
+                            <span id="batWarrantyText">-- / 160.000 KM Kalan</span>
+                            <span>160.000 KM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gezer Mobil Servis Enhanced -->
+    <section id="gezer" class="py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-black text-center mb-2">Gezer Mobil Servis</h2>
+            <p class="text-center text-slate-500 mb-10 text-sm">Servise gelmenize gerek yok, Togg tam donanımlı Gezer Servis minibüsümüz bulunduğunuz konuma gelsin.</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                <!-- Map Section -->
+                <div class="bg-white dark:bg-darkCard p-2 rounded-3xl border border-slate-200 dark:border-darkBorder shadow-xl overflow-hidden h-[400px] relative z-10">
+                    <div id="map" class="w-full h-full rounded-2xl z-10"></div>
+                </div>
+
+                <!-- Booking Section -->
+                <div class="bg-white dark:bg-darkCard p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-darkBorder shadow-xl flex flex-col justify-center relative overflow-hidden">
+                    <div id="gezerForm" class="space-y-4">
+                        <div class="inline-block py-1 px-3 rounded-full bg-green-500/10 text-green-500 text-xs font-bold mb-2 border border-green-500/20"><span class="w-2 h-2 rounded-full bg-green-500 inline-block mr-1 animate-pulse"></span> 15+ Mobil Servis Bölgesi Aktif</div>
+                        <h3 class="text-2xl font-black mb-4">Hemen Çağırın</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" placeholder="İl" class="p-4 rounded-xl bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder outline-none focus:border-brand text-sm">
+                            <input type="text" placeholder="İlçe" class="p-4 rounded-xl bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder outline-none focus:border-brand text-sm">
+                        </div>
+                        <select class="w-full p-4 rounded-xl bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder outline-none focus:border-brand text-sm">
+                            <option>Yazılım Güncellemesi (TruOS)</option>
+                            <option>Kabin Filtresi & Silecek Değişimi</option>
+                            <option>12V Akü Kontrol / Değişim</option>
+                            <option>Arıza Tespiti (OBD-II)</option>
+                        </select>
+                        <input type="datetime-local" class="w-full p-4 rounded-xl bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder outline-none focus:border-brand text-sm text-slate-500">
+                        <button onclick="simulateGezer()" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-xl hover:bg-brand dark:hover:bg-brand transition">Mobil Ekip Talep Et</button>
+                    </div>
+
+                    <!-- Simulation Result -->
+                    <div id="gezerSimulation" class="hidden absolute inset-0 bg-white dark:bg-darkCard p-8 flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-truck-pickup text-5xl text-brand mb-4 animate-bounce"></i>
+                        <h4 class="text-xl font-black mb-2">Teknisyen Yönlendirildi!</h4>
+                        <p class="text-sm text-slate-500 mb-6">Mobil Servis ekibimiz konumunuza doğru yola çıktı.</p>
+                        <div class="w-full bg-slate-50 dark:bg-darkBg p-4 rounded-xl border border-slate-200 dark:border-darkBorder text-left mb-6">
+                            <p class="text-xs text-slate-500 uppercase font-bold mb-1">Görevli Teknisyen</p>
+                            <p class="font-bold"><i class="fa-solid fa-user-gear text-brand mr-2"></i>Mehmet Yılmaz (34 TGG 048)</p>
+                            <div class="flex justify-between items-center mt-3 pt-3 border-t border-slate-200 dark:border-darkBorder">
+                                <span class="text-xs font-bold text-slate-500">Tahmini Varış:</span>
+                                <span class="text-green-500 font-black">24 Dakika</span>
+                            </div>
+                        </div>
+                        <button onclick="document.getElementById('gezerSimulation').classList.add('hidden'); document.getElementById('gezerForm').classList.remove('hidden');" class="text-sm font-bold text-brand hover:underline">Yeni Talep Oluştur</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Store Section -->
+    <section id="magaza" class="py-16 bg-slate-50 dark:bg-darkCard/30 border-y border-slate-200 dark:border-darkBorder">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
                 <div>
-                    <span class="text-xs font-extrabold text-brand uppercase tracking-widest">Orijinal Donanım & Aksesuarlar</span>
-                    <h2 class="text-3xl font-black text-slate-900 dark:text-white">T10X & T10F Uyumlu Ürünler</h2>
+                    <h2 class="text-3xl font-black mb-2 text-center md:text-left">Orijinal Aksesuar & Parça</h2>
+                    <p class="text-slate-500 text-sm text-center md:text-left">Aracınıza tam uyumlu, garantili ürünler.</p>
                 </div>
-                <div class="flex gap-2">
-                    <button onclick="filterCat('all')" class="cat-btn active px-3.5 py-1.5 rounded-xl text-xs font-bold bg-brand text-white transition">Tümü</button>
-                    <button onclick="filterCat('ic-mekan')" class="cat-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-200 dark:bg-darkCard text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-800 transition">İç Mekan</button>
-                    <button onclick="filterCat('sarj-enerji')" class="cat-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-200 dark:bg-darkCard text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-800 transition">Şarj & Wallbox</button>
-                    <button onclick="filterCat('dis-koruma')" class="cat-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-200 dark:bg-darkCard text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-800 transition">Dış Koruma</button>
+                <div class="flex flex-wrap gap-2 justify-center" id="catFilters">
+                    <button onclick="filterProducts('all')" class="cat-btn active bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-full text-xs font-bold transition">Tümü</button>
+                    <button onclick="filterProducts('ic-mekan')" class="cat-btn bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder px-4 py-2 rounded-full text-xs font-bold hover:border-brand transition">İç Mekan</button>
+                    <button onclick="filterProducts('sarj-wallbox')" class="cat-btn bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder px-4 py-2 rounded-full text-xs font-bold hover:border-brand transition">Şarj & Wallbox</button>
+                    <button onclick="filterProducts('dis-koruma')" class="cat-btn bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder px-4 py-2 rounded-full text-xs font-bold hover:border-brand transition">Dış Koruma</button>
+                    <button onclick="filterProducts('performans')" class="cat-btn bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder px-4 py-2 rounded-full text-xs font-bold hover:border-brand transition">Performans</button>
+                    <button onclick="filterProducts('teknoloji')" class="cat-btn bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder px-4 py-2 rounded-full text-xs font-bold hover:border-brand transition">Teknoloji</button>
                 </div>
             </div>
 
-            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Products dynamically injected here -->
+            </div>
         </div>
     </section>
-
-    <!-- B2B FLEET SECTION -->
-    <section id="b2b" class="py-16 border-t border-slate-200 dark:border-darkBorder">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <span class="text-xs font-extrabold text-amber-500 uppercase tracking-widest">Kurumsal Çözümler</span>
-            <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-4">Filo Yönetimi & B2B Tedarik</h2>
-            <p class="text-xs sm:text-sm text-slate-500 mb-8 max-w-xl mx-auto">Şirket filonuzdaki Togg araçları için toplu periyodik bakım anlaşmaları, özel faturalandırma ve kurumsal şarj kablosu tedariği.</p>
-            <form onsubmit="event.preventDefault(); alert('B2B Kurumsal Talebiniz Alındı. Satış yöneticimiz 1 iş günü içinde iletişime geçecektir.'); event.target.reset();" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <input type="text" placeholder="Firma Adı" required class="bg-slate-100 dark:bg-darkCard border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs outline-none focus:border-brand">
-                <input type="email" placeholder="Kurumsal E-Posta" required class="bg-slate-100 dark:bg-darkCard border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs outline-none focus:border-brand">
-                <button type="submit" class="bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-black py-3 rounded-xl text-xs hover:bg-brand transition">Kurumsal Teklif Al</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Cart Modal -->
-    <div id="cartModal" class="hidden fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm">
-        <div class="w-full max-w-md bg-white dark:bg-darkCard h-full p-6 flex flex-col justify-between shadow-2xl border-l border-slate-200 dark:border-darkBorder">
-            <div>
-                <div class="flex justify-between items-center pb-4 border-b border-slate-200 dark:border-darkBorder">
-                    <h3 class="text-lg font-black text-slate-900 dark:text-white"><i class="fa-solid fa-basket-shopping text-brand mr-2"></i>Alışveriş Sepetim</h3>
-                    <button onclick="closeCart()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-                </div>
-                <div id="cartList" class="divide-y divide-slate-200 dark:divide-darkBorder my-4 max-h-[55vh] overflow-y-auto"></div>
-            </div>
-
-            <div class="border-t border-slate-200 dark:border-darkBorder pt-4 space-y-3">
-                <div class="flex justify-between font-bold text-sm">
-                    <span class="text-slate-500">Ara Toplam:</span>
-                    <span id="cartTotal" class="text-slate-900 dark:text-white font-black text-lg">₺0</span>
-                </div>
-                <button onclick="checkout()" class="w-full bg-brand hover:bg-brandDark text-white font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-credit-card"></i> İyzico 3D Secure ile Öde (Demo)
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Admin Panel Modal -->
-    <div id="adminModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
-        <div class="w-full max-w-3xl bg-white dark:bg-darkCard rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-darkBorder shadow-2xl">
-            <div class="flex justify-between items-center mb-6">
-                <div>
-                    <h3 class="text-xl font-black text-slate-900 dark:text-white">ServiceTogg Yönetici Dashboard</h3>
-                    <p class="text-xs text-slate-500">50-Agent Mega Swarm Canlı Telemetri & Sipariş Monitörü</p>
-                </div>
-                <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-            </div>
-            <div class="grid grid-cols-3 gap-4 mb-6 text-center">
-                <div class="p-4 rounded-2xl bg-slate-100 dark:bg-darkBg border border-slate-200 dark:border-darkBorder">
-                    <span class="text-xs text-slate-500 font-bold uppercase">Toplam Ciro</span>
-                    <p class="text-2xl font-black text-brand mt-1">₺284.450</p>
-                </div>
-                <div class="p-4 rounded-2xl bg-slate-100 dark:bg-darkBg border border-slate-200 dark:border-darkBorder">
-                    <span class="text-xs text-slate-500 font-bold uppercase">Aktif Gezer Servis</span>
-                    <p class="text-2xl font-black text-amber-500 mt-1">48 Ekip</p>
-                </div>
-                <div class="p-4 rounded-2xl bg-slate-100 dark:bg-darkBg border border-slate-200 dark:border-darkBorder">
-                    <span class="text-xs text-slate-500 font-bold uppercase">Yedek Parça Stok</span>
-                    <p class="text-2xl font-black text-green-500 mt-1">%98 Dolu</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Footer -->
-    <footer class="bg-white dark:bg-darkBg border-t border-slate-200 dark:border-darkBorder py-12 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500 space-y-2">
-            <p class="font-bold text-slate-700 dark:text-slate-300">© 2026 ServiceTogg. Tüm hakları saklıdır. KVKK & GDPR Uyumlu Bağımsız Servis Platformu.</p>
+    <footer class="bg-white dark:bg-darkCard border-t border-slate-200 dark:border-darkBorder py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="text-2xl font-black mb-4">Service<span class="text-brand">Togg</span></div>
+            <p class="text-xs text-slate-500 mb-6">Bu websitesi Togg'un resmi sitesi değildir. Bağımsız servis ekosistemi simülasyonudur.</p>
+            <div class="flex justify-center gap-4 text-slate-400">
+                <a href="#" class="hover:text-brand"><i class="fa-brands fa-twitter text-xl"></i></a>
+                <a href="#" class="hover:text-brand"><i class="fa-brands fa-instagram text-xl"></i></a>
+                <a href="#" class="hover:text-brand"><i class="fa-brands fa-youtube text-xl"></i></a>
+            </div>
+            <p class="text-xs text-slate-400 mt-8">© 2026 ServiceTogg v2.0. Tüm hakları saklıdır.</p>
         </div>
     </footer>
 
+    <!-- Cart Drawer -->
+    <div id="cartDrawerOverlay" onclick="toggleCart()" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+    <div id="cartDrawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white dark:bg-darkCard shadow-2xl z-50 drawer-closed transition-transform duration-300 flex flex-col border-l border-slate-200 dark:border-darkBorder">
+        <div class="p-6 border-b border-slate-200 dark:border-darkBorder flex justify-between items-center">
+            <h3 class="text-xl font-black"><i class="fa-solid fa-basket-shopping text-brand mr-2"></i>Sepetim</h3>
+            <button onclick="toggleCart()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-darkBg flex items-center justify-center hover:text-brand transition"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="cartItems" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <!-- Cart items injected here -->
+        </div>
+        <div class="p-6 border-t border-slate-200 dark:border-darkBorder bg-slate-50 dark:bg-darkBg/50">
+            <div class="flex justify-between items-center mb-4">
+                <span class="font-bold text-slate-500">Ara Toplam:</span>
+                <span id="cartTotal" class="text-2xl font-black">₺0</span>
+            </div>
+            <button onclick="checkout()" class="w-full bg-brand hover:bg-brandDark text-white font-bold py-4 rounded-xl transition shadow-lg shadow-brand/30 flex justify-center items-center gap-2">
+                <i class="fa-solid fa-credit-card"></i> Güvenli Ödeme Yap
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // 1. DATA & STATE
         const products = [
-            { id: 1, name: "3D Lazer TPE Havuzlu Paspas Seti (T10X)", cat: "ic-mekan", price: 2490, img: "fa-car-side", tag: "En Çok Satan" },
-            { id: 2, name: "Kokusuz TPE Bagaj Havuzu", cat: "ic-mekan", price: 1250, img: "fa-box-open", tag: "Fırsat" },
-            { id: 3, name: "22 kW Type-2 Trifaze Şarj Kablosu (5m)", cat: "sarj-enerji", price: 4350, img: "fa-plug-circle-bolt", tag: "Zorunlu" },
-            { id: 4, name: "T10X Ön Kaput & Far PPF Koruma Kiti", cat: "dis-koruma", price: 6800, img: "fa-shield-halved", tag: "Premium" },
-            { id: 5, name: "Uçtan Uca Nano Ekran Koruyucu", cat: "ic-mekan", price: 890, img: "fa-mobile-screen", tag: "Yeni" },
-            { id: 6, name: "Ön Bagaj (Frunk) 45L Saklama Kiti", cat: "dis-koruma", price: 3450, img: "fa-toolbox", tag: "Özel Tasarım" },
-            { id: 7, name: "22 kW Akıllı Ev Tipi Wallbox Ünitesi", cat: "sarj-enerji", price: 18900, img: "fa-bolt-lightning", tag: "Hızlı Şarj" },
-            { id: 8, name: "Aero Jant Kapağı Seti (19 inç)", cat: "dis-koruma", price: 2850, img: "fa-compact-disc", tag: "Menzil +" }
+            { id: 1, name: "3D Lazer TPE Havuzlu Paspas Seti", cat: "ic-mekan", price: 2490, img: "fa-car-side", badge: "Çok Satan", desc: "T10X uyumlu, koku yapmaz.", stock: 45 },
+            { id: 2, name: "Premium Koltuk Kılıfı Seti", cat: "ic-mekan", price: 3200, img: "fa-chair", badge: "Yeni", desc: "Terletmez özel kumaş.", stock: 20 },
+            { id: 3, name: "Orta Konsol Organizer", cat: "ic-mekan", price: 450, img: "fa-box", badge: "", desc: "Ekstra depolama alanı.", stock: 100 },
+            { id: 4, name: "MagSafe Uyumlu Telefon Tutucu", cat: "ic-mekan", price: 650, img: "fa-mobile-screen", badge: "İndirim", desc: "Havalandırma ızgarasına uyumlu.", stock: 35 },
+            { id: 5, name: "RGB Ambient Aydınlatma Kiti", cat: "ic-mekan", price: 1850, img: "fa-lightbulb", badge: "Yeni", desc: "Mobil uygulama kontrollü.", stock: 15 },
+            { id: 6, name: "22 kW Type-2 Trifaze Kablo (5m)", cat: "sarj-wallbox", price: 4350, img: "fa-plug-circle-bolt", badge: "Çok Satan", desc: "Hızlı şarj için ideal.", stock: 50 },
+            { id: 7, name: "11 kW Akıllı Ev Tipi Wallbox", cat: "sarj-wallbox", price: 14500, img: "fa-bolt-lightning", badge: "İndirim", desc: "WiFi destekli şarj ünitesi.", stock: 8 },
+            { id: 8, name: "22 kW Akıllı Ev Tipi Wallbox", cat: "sarj-wallbox", price: 18900, img: "fa-charging-station", badge: "Premium", desc: "En hızlı ev şarj çözümü.", stock: 5 },
+            { id: 9, name: "Type2 to CCS2 Adaptör", cat: "sarj-wallbox", price: 2150, img: "fa-plug", badge: "", desc: "Geniş uyumluluk.", stock: 25 },
+            { id: 10, name: "Taşınabilir 7.4kW Şarj Cihazı", cat: "sarj-wallbox", price: 8900, img: "fa-battery-full", badge: "Yeni", desc: "Bagajınızda her an yanınızda.", stock: 12 },
+            { id: 11, name: "Ön Kaput PPF Koruma Kiti", cat: "dis-koruma", price: 6800, img: "fa-shield-halved", badge: "Premium", desc: "Taş izlerine son.", stock: 30 },
+            { id: 12, name: "9H Seramik Kaplama Seti", cat: "dis-koruma", price: 1250, img: "fa-spray-can-sparkles", badge: "Çok Satan", desc: "Göz alıcı parlaklık.", stock: 60 },
+            { id: 13, name: "UV Korumalı Cam Filmi Seti", cat: "dis-koruma", price: 2400, img: "fa-car-burst", badge: "", desc: "Güneş ışınlarını engeller.", stock: 40 },
+            { id: 14, name: "T10X Özel Çamurluk Seti", cat: "dis-koruma", price: 850, img: "fa-car-side", badge: "Yeni", desc: "Kir ve çamura karşı.", stock: 80 },
+            { id: 15, name: "19 inç Aero Jant Kapağı Seti", cat: "performans", price: 2850, img: "fa-compact-disc", badge: "İndirim", desc: "Menzili artırır.", stock: 22 },
+            { id: 16, name: "Karbon Görünümlü Spoiler", cat: "performans", price: 3400, img: "fa-plane-departure", badge: "Premium", desc: "Sportif görünüm.", stock: 10 },
+            { id: 17, name: "Arka Difüzör Eki", cat: "performans", price: 2900, img: "fa-car-rear", badge: "", desc: "Aerodinamik tasarım.", stock: 18 },
+            { id: 18, name: "4K Çift Yönlü Dashcam", cat: "teknoloji", price: 5400, img: "fa-video", badge: "Yeni", desc: "Sürüş güvenliği.", stock: 25 },
+            { id: 19, name: "Akıllı TPMS Sensör Seti", cat: "teknoloji", price: 1850, img: "fa-tire", badge: "Çok Satan", desc: "Lastik basınç takibi.", stock: 45 },
+            { id: 20, name: "OBD-II Bluetooth Dongle", cat: "teknoloji", price: 950, img: "fa-microchip", badge: "İndirim", desc: "Canlı telemetri verisi.", stock: 100 }
         ];
 
-        let cart = [];
+        let cart = JSON.parse(localStorage.getItem('servicetogg_cart')) || [];
 
+        // 2. STORE FUNCTIONS
         function renderProducts(items) {
             const grid = document.getElementById('productGrid');
             grid.innerHTML = items.map(p => `
-                <div class="bg-white dark:bg-darkCard rounded-2xl border border-slate-200 dark:border-darkBorder overflow-hidden hover:border-brand transition duration-300 group shadow-sm flex flex-col justify-between">
-                    <div class="p-6 relative">
-                        ${p.tag ? `<span class="absolute top-3 left-3 bg-brand/10 border border-brand/20 text-brand text-[10px] font-black uppercase px-2 py-0.5 rounded-full">${p.tag}</span>` : ''}
-                        <div class="h-36 flex items-center justify-center my-2">
-                            <i class="fa-solid ${p.img} text-6xl text-slate-400 dark:text-slate-600 group-hover:text-brand group-hover:scale-110 transition duration-300"></i>
-                        </div>
+                <div class="bg-white dark:bg-darkCard rounded-2xl border border-slate-200 dark:border-darkBorder overflow-hidden hover:border-brand dark:hover:border-brand transition duration-300 group flex flex-col h-full shadow-sm">
+                    <div class="p-6 relative bg-slate-50 dark:bg-darkBg/50 flex-1 flex flex-col items-center justify-center min-h-[160px]">
+                        ${p.badge ? `<span class="absolute top-3 left-3 bg-brand text-white text-[10px] font-black uppercase px-2 py-1 rounded shadow-sm">${p.badge}</span>` : ''}
+                        <i class="fa-solid ${p.img} text-6xl text-slate-300 dark:text-slate-600 group-hover:text-brand group-hover:scale-110 transition duration-300"></i>
                     </div>
-                    <div class="p-5 bg-slate-50 dark:bg-darkBg/60 border-t border-slate-200 dark:border-darkBorder">
-                        <h4 class="font-bold text-sm text-slate-900 dark:text-white truncate" title="${p.name}">${p.name}</h4>
-                        <div class="flex justify-between items-center mt-3">
+                    <div class="p-5 border-t border-slate-200 dark:border-darkBorder">
+                        <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1 line-clamp-1" title="${p.name}">${p.name}</h4>
+                        <p class="text-[10px] text-slate-500 mb-3 h-4">${p.desc}</p>
+                        <div class="flex justify-between items-center mt-auto">
                             <span class="text-brand font-black text-lg">₺${p.price.toLocaleString('tr-TR')}</span>
-                            <button onclick="addToCart(${p.id})" class="bg-brand hover:bg-brandDark text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">
-                                <i class="fa-solid fa-plus mr-1"></i> Ekle
+                            <button onclick="addToCart(${p.id})" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-darkBg flex items-center justify-center hover:bg-brand hover:text-white text-slate-700 dark:text-slate-300 transition">
+                                <i class="fa-solid fa-plus"></i>
                             </button>
                         </div>
                     </div>
@@ -366,82 +490,262 @@
             `).join('');
         }
 
-        function filterCat(cat) {
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('bg-brand', 'text-white'));
-            event.target.classList.add('bg-brand', 'text-white');
+        function filterProducts(cat) {
+            const btns = document.querySelectorAll('.cat-btn');
+            btns.forEach(b => {
+                b.classList.remove('bg-slate-900', 'dark:bg-white', 'text-white', 'dark:text-slate-900');
+                b.classList.add('bg-white', 'dark:bg-darkCard', 'text-slate-800', 'dark:text-white');
+            });
+            event.target.classList.remove('bg-white', 'dark:bg-darkCard', 'text-slate-800', 'dark:text-white');
+            event.target.classList.add('bg-slate-900', 'dark:bg-white', 'text-white', 'dark:text-slate-900');
+
             if (cat === 'all') renderProducts(products);
             else renderProducts(products.filter(p => p.cat === cat));
         }
 
-        function addToCart(id) {
-            const p = products.find(x => x.id === id);
-            cart.push(p);
+        // 3. CART FUNCTIONS
+        function saveCart() {
+            localStorage.setItem('servicetogg_cart', JSON.stringify(cart));
             updateCartUI();
         }
 
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                if(existing.qty < product.stock) existing.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            saveCart();
+            
+            // Show brief toast
+            const btn = document.getElementById('cartBadge');
+            btn.classList.add('animate-ping');
+            setTimeout(() => btn.classList.remove('animate-ping'), 500);
+        }
+
+        function updateCartQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if(item) {
+                item.qty += delta;
+                if(item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                } else if(item.qty > item.stock) {
+                    item.qty = item.stock;
+                }
+                saveCart();
+            }
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            saveCart();
+        }
+
         function updateCartUI() {
-            document.getElementById('cartBadge').innerText = cart.length;
-            const list = document.getElementById('cartList');
+            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cartBadge').innerText = count;
+            
+            const list = document.getElementById('cartItems');
             if (cart.length === 0) {
-                list.innerHTML = `<p class="text-xs text-slate-400 py-6 text-center">Sepetinizde ürün bulunmuyor.</p>`;
+                list.innerHTML = `<div class="h-full flex flex-col items-center justify-center text-slate-400 space-y-4"><i class="fa-solid fa-cart-arrow-down text-4xl"></i><p>Sepetiniz boş.</p></div>`;
                 document.getElementById('cartTotal').innerText = "₺0";
                 return;
             }
+
             let total = 0;
-            list.innerHTML = cart.map((item, idx) => {
-                total += item.price;
+            list.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
                 return `
-                    <div class="py-3 flex justify-between items-center text-xs">
-                        <div class="truncate pr-2">
-                            <p class="font-bold text-slate-800 dark:text-slate-200 truncate">${item.name}</p>
-                            <span class="text-brand font-black">₺${item.price.toLocaleString('tr-TR')}</span>
+                    <div class="flex items-center gap-4 p-3 rounded-xl border border-slate-200 dark:border-darkBorder bg-slate-50 dark:bg-darkBg/50 relative">
+                        <div class="w-12 h-12 rounded-lg bg-white dark:bg-darkCard flex items-center justify-center shrink-0 border border-slate-100 dark:border-slate-800">
+                            <i class="fa-solid ${item.img} text-xl text-slate-400"></i>
                         </div>
-                        <button onclick="removeFromCart(${idx})" class="text-red-500 hover:text-red-700"><i class="fa-solid fa-trash"></i></button>
+                        <div class="flex-1 min-w-0">
+                            <h5 class="text-xs font-bold truncate">${item.name}</h5>
+                            <div class="text-brand font-black text-sm mt-1">₺${itemTotal.toLocaleString('tr-TR')}</div>
+                        </div>
+                        <div class="flex items-center gap-2 bg-white dark:bg-darkCard rounded-lg border border-slate-200 dark:border-darkBorder p-1">
+                            <button onclick="updateCartQty(${item.id}, -1)" class="w-6 h-6 flex items-center justify-center text-xs hover:text-brand"><i class="fa-solid fa-minus"></i></button>
+                            <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
+                            <button onclick="updateCartQty(${item.id}, 1)" class="w-6 h-6 flex items-center justify-center text-xs hover:text-brand"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full text-[10px] flex items-center justify-center shadow-md hover:bg-red-600"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                 `;
             }).join('');
             document.getElementById('cartTotal').innerText = `₺${total.toLocaleString('tr-TR')}`;
         }
 
-        function removeFromCart(idx) { cart.splice(idx, 1); updateCartUI(); }
-        function openCart() { document.getElementById('cartModal').classList.remove('hidden'); }
-        function closeCart() { document.getElementById('cartModal').classList.add('hidden'); }
-        function openAdminModal() { document.getElementById('adminModal').classList.remove('hidden'); }
-        function closeAdminModal() { document.getElementById('adminModal').classList.add('hidden'); }
+        function toggleCart() {
+            const drawer = document.getElementById('cartDrawer');
+            const overlay = document.getElementById('cartDrawerOverlay');
+            if (drawer.classList.contains('drawer-closed')) {
+                drawer.classList.remove('drawer-closed');
+                drawer.classList.add('drawer-open');
+                overlay.classList.remove('hidden');
+            } else {
+                drawer.classList.remove('drawer-open');
+                drawer.classList.add('drawer-closed');
+                overlay.classList.add('hidden');
+            }
+        }
 
         function checkout() {
             if (cart.length === 0) return alert('Sepetiniz boş!');
-            alert('İyzico 3D Secure Ödeme Simülasyonu Başarılı! E-Faturanız ve takip kodunuz oluşturuldu.');
+            alert('Ödeme sayfasına yönlendiriliyorsunuz (Demo).');
             cart = [];
-            updateCartUI();
-            closeCart();
+            saveCart();
+            toggleCart();
         }
 
-        function calcWizPrice() {
-            const type = document.getElementById('wizType').value;
-            const priceEl = document.getElementById('wizEstimatedPrice');
-            if (type === 'periodic-40') priceEl.innerText = "₺4.850";
-            else if (type === 'periodic-80') priceEl.innerText = "₺9.200";
-            else if (type === 'mobile-service') priceEl.innerText = "₺2.450";
-            else if (type === 'diagnostic') priceEl.innerText = "₺1.850";
-            else priceEl.innerText = "₺3.600";
+        // 4. WIZARD FUNCTIONS
+        function wizNext(step) {
+            document.getElementById('wiz-step-1').classList.add('hidden');
+            document.getElementById('wiz-step-2').classList.add('hidden');
+            document.getElementById('wiz-step-3').classList.add('hidden');
+            document.getElementById(`wiz-step-${step}`).classList.remove('hidden');
+            
+            const progress = document.getElementById('wizard-progress');
+            if(step === 1) progress.style.width = '33%';
+            if(step === 2) progress.style.width = '66%';
+            if(step === 3) progress.style.width = '100%';
+
+            ['step1', 'step2', 'step3'].forEach((s, idx) => {
+                const el = document.getElementById(`${s}-indicator`);
+                if(idx + 1 <= step) {
+                    el.classList.add('text-brand');
+                } else {
+                    el.classList.remove('text-brand');
+                }
+            });
         }
 
-        function handleWizardSubmit(e) {
-            e.preventDefault();
-            const model = document.getElementById('wizModel').value;
-            const km = document.getElementById('wizKm').value;
-            const dtc = document.getElementById('wizDtc').value;
-            alert(`Randevu Başarıyla Oluşturuldu!\nModel: ${model}\nKM: ${km}\nDTC Kodu: ${dtc}\nTeknisyen ataması yapıldı.`);
+        function wizCalculate() {
+            const select = document.getElementById('wizDtc');
+            const option = select.options[select.selectedIndex];
+            const code = option.value;
+            const sev = option.getAttribute('data-sev');
+
+            const bg = document.getElementById('wizIconBg');
+            const icon = document.getElementById('wizIcon');
+            const title = document.getElementById('wizResTitle');
+            const desc = document.getElementById('wizResDesc');
+            const price = document.getElementById('wizPrice');
+            const time = document.getElementById('wizResTime');
+
+            if(code === 'NONE') {
+                bg.className = 'w-16 h-16 rounded-full flex items-center justify-center text-2xl font-black text-white shrink-0 bg-green-500';
+                icon.className = 'fa-solid fa-check';
+                title.innerText = 'Arıza Yok (Rutin Kontrol)';
+                desc.innerText = 'Aracınızda kayıtlı kritik bir DTC kodu bulunmuyor. Standart bakım yeterlidir.';
+                price.innerText = '₺1.200 (20K Bakımı)';
+                time.innerText = '45 Dk';
+            } else if (sev === 'info') {
+                bg.className = 'w-16 h-16 rounded-full flex items-center justify-center text-2xl font-black text-white shrink-0 bg-blue-500';
+                icon.className = 'fa-solid fa-circle-info';
+                title.innerText = `Bilgi / Kalibrasyon: ${code}`;
+                desc.innerText = 'Küçük bir kalibrasyon veya sensör temizliği gerekiyor. Sürüşe engel değil.';
+                price.innerText = 'Ücretsiz / Garanti';
+                time.innerText = '30 Dk';
+            } else if (sev === 'warning') {
+                bg.className = 'w-16 h-16 rounded-full flex items-center justify-center text-2xl font-black text-white shrink-0 bg-orange-500';
+                icon.className = 'fa-solid fa-triangle-exclamation';
+                title.innerText = `Uyarı: ${code}`;
+                desc.innerText = 'Modül iletişimi veya performans uyarısı. En kısa sürede servise uğrayın.';
+                price.innerText = '₺850 - ₺2.500';
+                time.innerText = '2 Saat';
+            } else {
+                bg.className = 'w-16 h-16 rounded-full flex items-center justify-center text-2xl font-black text-white shrink-0 bg-red-600 animate-pulse';
+                icon.className = 'fa-solid fa-radiation';
+                title.innerText = `Kritik Arıza: ${code}`;
+                desc.innerText = 'Batarya veya güç aktarım sisteminde kritik hata. Aracı sürmeyin, çekici talep edin.';
+                price.innerText = 'Garanti Kapsamında';
+                time.innerText = '1-3 Gün';
+            }
+            
+            wizNext(3);
         }
 
+        // 5. WARRANTY FUNCTIONS
+        function checkWarranty() {
+            const vin = document.getElementById('vinInput').value.trim();
+            const km = parseInt(document.getElementById('vinKm').value);
+            
+            if(!vin || isNaN(km)) return alert('Lütfen geçerli VIN ve KM giriniz.');
+            
+            document.getElementById('warrantyResult').classList.remove('hidden');
+            
+            // Calculate General (150k limit)
+            let genPct = (km / 150000) * 100;
+            if(genPct > 100) genPct = 100;
+            document.getElementById('genWarrantyBar').style.width = `${genPct}%`;
+            document.getElementById('genWarrantyText').innerText = `${km.toLocaleString('tr-TR')} / 150.000 KM (${(150000-km > 0 ? (150000-km) : 0).toLocaleString('tr-TR')} KM Kaldı)`;
+            if(genPct === 100) document.getElementById('genWarrantyBar').classList.replace('bg-brand', 'bg-red-500');
+
+            // Calculate Battery (160k limit)
+            let batPct = (km / 160000) * 100;
+            if(batPct > 100) batPct = 100;
+            document.getElementById('batWarrantyBar').style.width = `${batPct}%`;
+            document.getElementById('batWarrantyText').innerText = `${km.toLocaleString('tr-TR')} / 160.000 KM (${(160000-km > 0 ? (160000-km) : 0).toLocaleString('tr-TR')} KM Kaldı)`;
+            if(batPct === 100) document.getElementById('batWarrantyBar').classList.replace('bg-orange-500', 'bg-red-500');
+        }
+
+        // 6. GEZER MOBİL SERVİS
+        function simulateGezer() {
+            document.getElementById('gezerForm').classList.add('hidden');
+            document.getElementById('gezerSimulation').classList.remove('hidden');
+            document.getElementById('gezerSimulation').classList.add('flex');
+        }
+
+        // 7. THEME & INIT
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
             const isDark = document.documentElement.classList.contains('dark');
             document.getElementById('themeIcon').className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
         }
 
-        window.onload = () => { renderProducts(products); updateCartUI(); };
+        window.onload = () => {
+            renderProducts(products);
+            updateCartUI();
+
+            // Initialize Leaflet Map
+            const map = L.map('map').setView([39.92077, 32.85411], 6); // Center of Turkey
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            const centers = [
+                { name: "İstanbul - Maslak", coords: [41.11, 29.02] },
+                { name: "İstanbul - Zeytinburnu", coords: [40.99, 28.90] },
+                { name: "Ankara - Söğütözü", coords: [39.91, 32.81] },
+                { name: "İzmir - Bornova", coords: [38.46, 27.21] },
+                { name: "Bursa - Gemlik (Fabrika)", coords: [40.41, 29.11] },
+                { name: "Antalya - Muratpaşa", coords: [36.89, 30.71] },
+                { name: "Adana - Seyhan", coords: [36.99, 35.32] },
+                { name: "Kocaeli - Gebze", coords: [40.80, 29.43] },
+                { name: "Konya - Selçuklu", coords: [37.89, 32.49] },
+                { name: "Kayseri - Melikgazi", coords: [38.72, 35.48] },
+                { name: "Samsun - İlkadım", coords: [41.28, 36.33] },
+                { name: "Gaziantep - Şehitkamil", coords: [37.07, 37.38] },
+                { name: "Eskişehir - Tepebaşı", coords: [39.78, 30.50] },
+                { name: "Denizli - Pamukkale", coords: [37.78, 29.08] },
+                { name: "Trabzon - Ortahisar", coords: [40.99, 39.73] }
+            ];
+
+            const icon = L.divIcon({
+                className: 'custom-div-icon',
+                html: "<div style='background-color:#e53935; width:20px; height:20px; border-radius:50%; border:3px solid white; box-shadow: 0 0 10px rgba(229,57,53,0.8);'></div>",
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            });
+
+            centers.forEach(c => {
+                L.marker(c.coords, {icon: icon}).addTo(map).bindPopup(`<b>Togg Servis & Gezer Merkez</b><br>${c.name}`);
+            });
+        };
     </script>
 </body>
 </html>
