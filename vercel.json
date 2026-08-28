@@ -25,6 +25,10 @@
                      {
                          "source":  "/ariza-rehberi",
                          "destination":  "/ariza-rehberi.html"
+                     },
+                     {
+                         "source":  "/api/tariffs.json",
+                         "destination":  "/api/tariffs.json"
                      }
                  ],
     "headers":  [
