@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <title>Togg T10X & T10F Orijinal & Uyumlu Aksesuar Kataloğu 2026 | ServiceTogg</title>
     <meta name="description" content="Togg T10X ve T10F için en popüler 7 aksesuar: 29 inç nano ekran koruyucu, 3D TPE paspas seti, 22kW Type-2 şarj kablosu, seramik cam filmi, jack pad ve PPF kaplama.">
     <meta name="keywords" content="togg aksesuar, togg paspas, togg 22kw kablo, togg ekran koruyucu, togg jack pad, togg bagaj havuzu, togg ppf">
@@ -118,7 +122,7 @@
             </nav>
 
             <div class="flex items-center gap-3">
-                <button onclick="toggleCartDrawer()" class="relative p-3 rounded-2xl bg-white/5 hover:bg-rose-500/20 border border-white/10 text-white flex items-center gap-2 transition">
+                <button onclick="toggleCartDrawer()" aria-label="Alışveriş Sepetini Aç" class="relative p-3 rounded-2xl bg-white/5 hover:bg-rose-500/20 border border-white/10 text-white flex items-center gap-2 transition">
                     <i class="fa-solid fa-cart-shopping text-rose-400"></i>
                     <span class="text-xs font-bold hidden sm:inline">Sepetim</span>
                     <span id="cartBadge" class="w-5 h-5 rounded-full bg-rose-500 text-white text-[10px] font-black flex items-center justify-center">0</span>
@@ -144,10 +148,10 @@
 
             <!-- Category Filter Pills -->
             <div class="flex flex-wrap justify-center gap-2 mt-8 text-xs font-bold">
-                <button onclick="filterAccessories('all')" class="acc-pill active bg-gradient-to-r from-rose-500 to-amber-500 text-white px-5 py-2.5 rounded-xl shadow-md transition" data-cat="all">Tüm Aksesuarlar (7)</button>
-                <button onclick="filterAccessories('ic-mekan')" class="acc-pill bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 px-5 py-2.5 rounded-xl transition" data-cat="ic-mekan">İç Mekan & Konfor</button>
-                <button onclick="filterAccessories('sarj-donanim')" class="acc-pill bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 px-5 py-2.5 rounded-xl transition" data-cat="sarj-donanim">Şarj & Donanım</button>
-                <button onclick="filterAccessories('dis-koruma')" class="acc-pill bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 px-5 py-2.5 rounded-xl transition" data-cat="dis-koruma">Dış Koruma & PPF</button>
+                <button onclick="filterAccessories('all')" aria-label="Tüm aksesuarları listele" class="acc-pill active bg-gradient-to-r from-rose-500 to-amber-500 text-white px-5 py-2.5 rounded-xl shadow-md transition" data-cat="all">Tüm Aksesuarlar (7)</button>
+                <button onclick="filterAccessories('ic-mekan')" aria-label="İç Mekan aksesuarlarını filtrele" class="acc-pill bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 px-5 py-2.5 rounded-xl transition" data-cat="ic-mekan">İç Mekan & Konfor</button>
+                <button onclick="filterAccessories('sarj-donanim')" aria-label="Şarj ve Donanım ürünlerini filtrele" class="acc-pill bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 px-5 py-2.5 rounded-xl transition" data-cat="sarj-donanim">Şarj & Donanım</button>
+                <button onclick="filterAccessories('dis-koruma')" aria-label="Dış Koruma ürünlerini filtrele" class="acc-pill bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 px-5 py-2.5 rounded-xl transition" data-cat="dis-koruma">Dış Koruma & PPF</button>
             </div>
         </section>
 
@@ -182,7 +186,7 @@
                             <span class="text-[10px] text-slate-400 block">KDV Dahil</span>
                             <div class="text-2xl font-black text-white font-mono">₺899</div>
                         </div>
-                        <button onclick="addToCart('29\'\' Mat Nano Ekran Koruyucu', 899, 'ic-mekan')" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
+                        <button onclick="addToCart('29\'\' Mat Nano Ekran Koruyucu', 899, 'ic-mekan')" aria-label="Ürünü Sepete Ekle" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
                             <i class="fa-solid fa-cart-plus"></i> Sepete Ekle
                         </button>
                     </div>
@@ -215,7 +219,7 @@
                             <span class="text-[10px] text-slate-400 block">KDV Dahil</span>
                             <div class="text-2xl font-black text-white font-mono">₺3.499</div>
                         </div>
-                        <button onclick="addToCart('3D TPE Havuzlu Paspas + Bagaj Seti', 3499, 'ic-mekan')" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
+                        <button onclick="addToCart('3D TPE Havuzlu Paspas + Bagaj Seti', 3499, 'ic-mekan')" aria-label="Ürünü Sepete Ekle" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
                             <i class="fa-solid fa-cart-plus"></i> Sepete Ekle
                         </button>
                     </div>
@@ -248,7 +252,7 @@
                             <span class="text-[10px] text-slate-400 block">KDV Dahil</span>
                             <div class="text-2xl font-black text-white font-mono">₺4.999</div>
                         </div>
-                        <button onclick="addToCart('22 kW Type-2 Trifaze Şarj Kablosu (5m)', 4999, 'sarj-donanim')" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
+                        <button onclick="addToCart('22 kW Type-2 Trifaze Şarj Kablosu (5m)', 4999, 'sarj-donanim')" aria-label="22 kW Type-2 Trifaze Şarj Kablosunu Sepete Ekle" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
                             <i class="fa-solid fa-cart-plus"></i> Sepete Ekle
                         </button>
                     </div>
@@ -281,7 +285,7 @@
                             <span class="text-[10px] text-slate-400 block">Uygulama Dahil</span>
                             <div class="text-2xl font-black text-white font-mono">₺12.000</div>
                         </div>
-                        <button onclick="addToCart('Isı Kontrollü Seramik Cam Filmi Paketi', 12000, 'dis-koruma')" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
+                        <button onclick="addToCart('Isı Kontrollü Seramik Cam Filmi Paketi', 12000, 'dis-koruma')" aria-label="Ürünü Sepete Ekle" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
                             <i class="fa-solid fa-cart-plus"></i> Sepete Ekle
                         </button>
                     </div>
@@ -314,7 +318,7 @@
                             <span class="text-[10px] text-slate-400 block">KDV Dahil</span>
                             <div class="text-2xl font-black text-white font-mono">₺1.299</div>
                         </div>
-                        <button onclick="addToCart('EV Jack Pad Şasi Kaldırma Seti (4\'lü)', 1299, 'sarj-donanim')" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
+                        <button onclick="addToCart('EV Jack Pad Şasi Kaldırma Seti (4\'lü)', 1299, 'sarj-donanim')" aria-label="EV Jack Pad Şasi Kaldırma Setini Sepete Ekle" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
                             <i class="fa-solid fa-cart-plus"></i> Sepete Ekle
                         </button>
                     </div>
@@ -347,7 +351,7 @@
                             <span class="text-[10px] text-slate-400 block">Uygulama Dahil</span>
                             <div class="text-2xl font-black text-white font-mono">₺8.500</div>
                         </div>
-                        <button onclick="addToCart('Ön Kaput & Farlar TPU PPF Kaplama', 8500, 'dis-koruma')" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
+                        <button onclick="addToCart('Ön Kaput & Farlar TPU PPF Kaplama', 8500, 'dis-koruma')" aria-label="Ürünü Sepete Ekle" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
                             <i class="fa-solid fa-cart-plus"></i> Sepete Ekle
                         </button>
                     </div>
@@ -380,7 +384,7 @@
                             <span class="text-[10px] text-slate-400 block">KDV Dahil</span>
                             <div class="text-2xl font-black text-white font-mono">₺1.599</div>
                         </div>
-                        <button onclick="addToCart('Konsol İçi Düzenleyici & Gizli Çekmece', 1599, 'ic-mekan')" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
+                        <button onclick="addToCart('Konsol İçi Düzenleyici & Gizli Çekmece', 1599, 'ic-mekan')" aria-label="Ürünü Sepete Ekle" class="bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md">
                             <i class="fa-solid fa-cart-plus"></i> Sepete Ekle
                         </button>
                     </div>
@@ -429,7 +433,7 @@
     <div id="cartDrawer" class="fixed inset-y-0 right-0 w-full md:w-96 glass-panel !rounded-none !border-y-0 !border-r-0 border-l border-white/10 bg-[#070a12]/95 backdrop-blur-2xl z-[60] transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
         <div class="p-6 border-b border-white/10 flex justify-between items-center">
             <h2 class="text-lg font-black text-white"><i class="fa-solid fa-shopping-cart text-rose-500 mr-2"></i> Alışveriş Sepetim</h2>
-            <button onclick="toggleCartDrawer()" class="text-gray-400 hover:text-white p-2"><i class="fa-solid fa-times text-lg"></i></button>
+            <button onclick="toggleCartDrawer()" aria-label="Alışveriş Sepetini Kapat" class="text-gray-400 hover:text-white p-2"><i class="fa-solid fa-times text-lg"></i></button>
         </div>
         <div class="flex-grow overflow-y-auto p-4 space-y-3" id="cartItemsContainer">
             <!-- Items injected by JS -->
@@ -447,7 +451,7 @@
                 <span class="text-slate-300 font-bold">Toplam Tutar</span>
                 <span class="font-black text-2xl text-white font-mono" id="cartTotalDisplay">₺0</span>
             </div>
-            <button onclick="checkoutCart()" class="w-full bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-rose-500/25 transition">
+            <button onclick="checkoutCart()" aria-label="Siparişi Tamamla ve Ödeme Adımına Geç" class="w-full bg-gradient-to-r from-rose-500 to-amber-500 hover:opacity-95 text-white font-black py-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-rose-500/25 transition">
                 <i class="fa-solid fa-lock"></i> Güvenli Sipariş Ver
             </button>
         </div>
@@ -573,11 +577,11 @@
                         <div class="text-slate-400 mt-0.5">₺${item.price.toLocaleString('tr-TR')} x ${item.qty}</div>
                     </div>
                     <div class="flex items-center gap-1.5 bg-black/40 px-2 py-1 rounded-xl border border-white/10">
-                        <button onclick="changeQty(${idx}, -1)" class="w-5 h-5 flex items-center justify-center text-slate-300 hover:text-white">-</button>
+                        <button onclick="changeQty(${idx}, -1)" aria-label="Adedi bir azalt" class="w-5 h-5 flex items-center justify-center text-slate-300 hover:text-white">-</button>
                         <span class="font-mono font-bold text-white px-1">${item.qty}</span>
-                        <button onclick="changeQty(${idx}, 1)" class="w-5 h-5 flex items-center justify-center text-slate-300 hover:text-white">+</button>
+                        <button onclick="changeQty(${idx}, 1)" aria-label="Adedi bir artır" class="w-5 h-5 flex items-center justify-center text-slate-300 hover:text-white">+</button>
                     </div>
-                    <button onclick="removeFromCart(${idx})" class="text-slate-500 hover:text-rose-400 p-1">
+                    <button onclick="removeFromCart(${idx})" aria-label="Ürünü sepetten sil" class="text-slate-500 hover:text-rose-400 p-1">
                         <i class="fa-solid fa-trash-can"></i>
                     </button>
                 </div>
